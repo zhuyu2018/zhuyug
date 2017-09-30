@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <title>MEGAYU</title>
+</head>
+<body>
+<!--/*@thymesVar id="name" type="java.lang.String"*/-->
+
+
+<div style="height: 43px;margin-top: 9px;">
+    <span style="font-size: smaller;margin-left: 4px;" th:text="|Hello! Welcome to MEGAYU |" >HELLO</span>
+    <div style="float: right;width: 28px;margin-right: 5px;margin-top: 2px;" onclick="registerModal();" >
+        <img style="width: 26px;margin-right: 1px;" id="xing" src="image/xing.jpg"/>
+        <!--<label style="float: right;">注册</label>-->
+    </div>
+    <div style="float: right;margin-right: 12px;" onclick="loginModal();">
+        <img style="width: 32px;margin-right: 1px;" id="time"  src="image/time.jpg"/>
+        <!--<label style="float: right;">登录</label>-->
+    </div>
+
+</div>
+
+<div id="modalclose"><iframe frameborder="0"  scrolling="no" src="welcome" th:href="@{welcome}" width="100%" height="500px"></iframe></div>
+
+<div id="modal" class="modal" style="display: none;width: 251px;margin-top: 174px;margin-left: -130px;" onblur="modalClose();">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control"  placeholder="请输入用户名" type="text" id="loginName" name="loginName" value=""/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="请输入密码" type="password" id="password" name="password" value=""/>
+                </div>
+
+
+                <button  class="btn btn-success" style="width: 110px;"  onclick="toLogin();">登录</button>
+                <button class="btn btn-danger" style="width: 110px;float: right;"   onclick="closeModal();">取消</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div id="registerModal" class="modal" style="display: none;width: 251px;margin-top: 174px;margin-left: -130px;" onblur="modalClose();">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control"  placeholder="请输入用户名" type="text" id="registerName" name="registerName" value=""/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="请输入密码" type="password" id="registerPassword" name="registerPassword" value=""/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="请确认密码" type="password" id="registerSurePassword" name="registerSurePassword" value=""/>
+                </div>
+
+                <button  class="btn btn-success" style="width: 110px;"  onclick="toRegister();">注册</button>
+                <button class="btn btn-danger" style="width: 110px;float: right;"   onclick="closeRegisterModal();">取消</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script  src="js/jquery-3.2.1.min.js" th:src="@{js/jquery-3.2.1.min.js}"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    function loginModal() {
+//        $("#login").removeClass("fade");
+        $("#modal").slideToggle();
+    }
+    function  registerModal() {
+        $("#registerName").val("");
+        $("#registerPassword").val("");
+        $("#registerSurePassword").val("");
+        $("#registerModal").slideToggle();
+    }
+    function closeModal(){
+        $("#modal").slideUp('slow');
+        $("#loginName").val("");
+        $("#password").val("");
+    }
+    function closeRegisterModal() {
+        $("#registerModal").slideUp('slow');
+        $("#registerName").val("");
+        $("#registerPassword").val("");
+        $("#registerSurePassword").val("");
+    }
+    function toRegister() {
+        var registerName = $("#registerName").val();
+        var registerPassword = $("#registerPassword").val();
+        var registerSurePassword = $("#registerSurePassword").val();
+        if(registerName==null || registerName=="" || registerPassword==null || registerPassword=="" || registerSurePassword==null || registerSurePassword==""){
+            alert("请完善注册信息");
+            return;
+        }
+        $.post("login/toRegister",{registerName:registerName,registerPassword:registerPassword,registerSurePassword:registerSurePassword},function(result){
+            if(result=="success"){
+                alert("注册成功请登录");
+                $("#registerModal").slideUp('slow');
+            }else{
+                alert("注册信息有误");
+            }
+        });
+    }
+    function toLogin() {
+        var loginName = $("#loginName").val();
+        var password = $("#password").val();
+        if(loginName==null || loginName=="" || password==null || password==""){
+            alert("请输入用户名和密码");
+            return;
+        }
+        $.post("login/toLogin",{loginName:loginName,password:password},function(result){
+            if(result=="success"){
+                self.location.href="login/loginSuccess";
+            }else{
+                alert("登录失败");
+            }
+        });
+    }
+
+</script>
+</html>
