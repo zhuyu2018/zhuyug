@@ -3,19 +3,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/megayu.css" />
     <title>MEGAYU</title>
 </head>
 <body>
-<div>
+<div class="info-edit-div">
     <!--<form action="infoEditSave">-->
         <div class="form-group">
-            <input class="form-control" readonly type="text" id="loginName" name="loginName" value=""/>
+            <input class="form-control" readonly="readonly" type="text" id="loginName" name="loginName" th:value="${loginName}"/>
         </div>
         <div class="form-group">
             <input class="form-control" placeholder="请输入密码" type="password" id="password" name="password" value=""/>
         </div>
-
-        <button  class="btn btn-success" style="width: 110px;" onclick="infoEdit();">修改</button>
+        <div class="form-group">
+            <input class="form-control" placeholder="请确认密码" type="password" id="passwordsure" name="passwordsure" value=""/>
+        </div>
+        <button  class="btn btn-success" style="width: 220px;" onclick="infoEdit();">修改</button>
     <!--</form>-->
 
 
@@ -27,7 +30,20 @@
     function infoEdit() {
         var loginName = $("#loginName").val();
         var password = $("#password").val();
-        $.post("infoEditSave",{loginName:loginName,password:password},function (result) {
+        var passwordsure = $("#passwordsure").val();
+        if(password==null || password == ""){
+            alert("请输入密码");
+            return ;
+        }
+        if(passwordsure==null || passwordsure == ""){
+            alert("请输入确认密码");
+            return ;
+        }
+        if(password!=password){
+            alert("两次密码不相符");
+            return;
+        }
+        $.post("infoEditSave",{loginName:loginName,password:password,passwordsure:passwordsure},function (result) {
             if(result=="success"){
                 alert("修改成功，请重新登录");
                 location.reload();

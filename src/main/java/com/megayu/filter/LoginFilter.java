@@ -1,5 +1,7 @@
 package com.megayu.filter;
 
+import com.megayu.util.LoginUtil;
+import com.megayu.vo.LoginVo;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +32,9 @@ public class LoginFilter implements Filter {
         if(urlFilter(url)){
             filterChain.doFilter(request,response);
         }else{
-            Object loginName = request.getSession().getAttribute("loginName");
-            if(loginName==null || "".equals(loginName.toString())){
+//            Object loginName = request.getSession().getAttribute("loginName");
+            LoginVo loginVo = LoginUtil.getLoginVo(request);
+            if(loginVo==null || "".equals(loginVo.getLoginname().toString())){
                 System.out.print("被拦截的url："+url+"");
                 response.setHeader("Cache-Control", "no-store");
                 response.setDateHeader("Expires", 0);

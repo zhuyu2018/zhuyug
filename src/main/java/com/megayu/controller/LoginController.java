@@ -2,7 +2,9 @@ package com.megayu.controller;
 
 import com.megayu.entity.User;
 import com.megayu.repository.UserRepositoty;
+import com.megayu.util.LoginUtil;
 import com.megayu.util.MD5Util;
+import com.megayu.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
@@ -35,7 +37,11 @@ public class LoginController {
         if(userResult==null){
             return "fail";
         }else{
-            request.getSession().setAttribute("loginName",loginName);
+            LoginVo loginVo = new LoginVo();
+            loginVo.setId(userResult.getId());
+            loginVo.setLoginname(userResult.getLoginname());
+            loginVo.setName(userResult.getName());
+            request.getSession().setAttribute("loginVo",loginVo);
             return "success";
         }
     }
@@ -65,8 +71,9 @@ public class LoginController {
 
     @RequestMapping(value = "/loginSuccess")
     public String loginSuccess(HttpServletRequest request , HttpServletResponse response, Model model){
-        String loginName = (String) request.getSession().getAttribute("loginName");
-        model.addAttribute("loginName",loginName);
+        LoginVo loginVo = LoginUtil.getLoginVo(request);
+//        String loginName = (String) request.getSession().getAttribute("loginName");
+        model.addAttribute("loginName",loginVo.getLoginname());
         return "loginsuccess";
     }
 
@@ -79,8 +86,9 @@ public class LoginController {
     @RequestMapping(value="infoEdit")
     public String userInfoEdit(HttpServletRequest request , HttpServletResponse response, Model model){
         try{
-            String loginName = (String)request.getSession().getAttribute("loginName");
-            request.setAttribute("loginName",loginName);
+            LoginVo loginVo = LoginUtil.getLoginVo(request);
+            request.setAttribute("loginName",loginVo.getLoginname());
+            request.setAttribute("id",loginVo.getId());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -90,14 +98,22 @@ public class LoginController {
     @RequestMapping(value="infoEditSave")
     public String infoEditSave(HttpServletRequest request , HttpServletResponse response, Model model){
         try{
-            String loginName = (String)request.getSession().getAttribute("loginName");
+//            String loginName = (String)request.getSession().getAttribute("loginName");
+            LoginVo loginVo = LoginUtil.getLoginVo(request);
             String password = (String)request.getParameter("password");
+            String passwordsure = (String)request.getParameter("passwordsure");
             String loginNameForm = (String)request.getParameter("loginName");
-            if(loginName!=loginNameForm){
+            if(loginVo.getLoginname()!=loginNameForm){
+                return "fail";
+            }
+            if(password==null || "".equals(password)){
+                return "fail";
+            }
+            if(!password.equals(passwordsure)){
                 return "fail";
             }
             User user = new User();
-            user.setLoginname(loginName);
+            user.setId(loginVo.getId());
             User userResult = userRepository.findOne(Example.of(user));
             userResult.setPassword(MD5Util.MD5EncodeUTF8(password));
             userRepository.save(userResult);
