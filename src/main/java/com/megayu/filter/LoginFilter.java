@@ -25,11 +25,14 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)servletResponse;
 
         String url = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        request.setAttribute("contextPath",contextPath);
         if(urlFilter(url)){
             filterChain.doFilter(request,response);
         }else{
             Object loginName = request.getSession().getAttribute("loginName");
             if(loginName==null || "".equals(loginName.toString())){
+                System.out.print("被拦截的url："+url+"");
                 response.setHeader("Cache-Control", "no-store");
                 response.setDateHeader("Expires", 0);
                 response.setHeader("Prama", "no-cache");
@@ -44,7 +47,6 @@ public class LoginFilter implements Filter {
         if("/login/toLogin".equals(url)){
             return true;
         }
-        System.out.print("被拦截的url："+url+"");
         return false;
     }
 

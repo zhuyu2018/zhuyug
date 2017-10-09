@@ -70,4 +70,42 @@ public class LoginController {
         return "loginsuccess";
     }
 
+    @ResponseBody
+    @RequestMapping(value="/loginOut")
+    public String loginOut(HttpServletRequest request , HttpServletResponse response, Model model){
+        request.getSession().invalidate();
+        return "out";
+    }
+    @RequestMapping(value="infoEdit")
+    public String userInfoEdit(HttpServletRequest request , HttpServletResponse response, Model model){
+        try{
+            String loginName = (String)request.getSession().getAttribute("loginName");
+            request.setAttribute("loginName",loginName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "infoedit";
+    }
+    @ResponseBody
+    @RequestMapping(value="infoEditSave")
+    public String infoEditSave(HttpServletRequest request , HttpServletResponse response, Model model){
+        try{
+            String loginName = (String)request.getSession().getAttribute("loginName");
+            String password = (String)request.getParameter("password");
+            String loginNameForm = (String)request.getParameter("loginName");
+            if(loginName!=loginNameForm){
+                return "fail";
+            }
+            User user = new User();
+            user.setLoginname(loginName);
+            User userResult = userRepository.findOne(Example.of(user));
+            userResult.setPassword(MD5Util.MD5EncodeUTF8(password));
+            userRepository.save(userResult);
+
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "fail";
+    }
 }

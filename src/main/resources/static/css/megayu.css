@@ -1,0 +1,51 @@
+.hide-div{
+    display: none;
+}
+
+.top-div{
+    border-bottom: 1px solid #cccccc;
+    font-family: fantasy;
+    height: 39px;
+    background-color: darkgray;
+}
+
+.loginout-div{
+    margin-right: 8px;
+    cursor: pointer;
+    float: right;
+    width: 27px;
+    margin-top: 6px;
+}
+
+.loginname-div{
+    margin-right: 10px;
+    color: royalblue;
+    float: right;
+    font-size: large;
+    margin-top: 9px;
+    cursor: pointer;
+}
+
+.login-modal-div{
+    background-color: crimson;
+    font-family: initial;
+    font-size: 10px;
+    text-align: center;
+    width: 150px;
+    float: right;
+    margin-right: 43px;
+}
+
+.login-modal-a{
+    color: #000;
+    cursor: pointer;
+}
+
+.login-modal-table{
+    /*border-bottom:1px solid #808080;*/
+    margin:auto;
+}
+
+tr{
+    border-bottom: 1px solid #808080;
+}
