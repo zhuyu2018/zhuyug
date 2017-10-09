@@ -12,3 +12,6 @@ function  loginOut(obj) {
         }
     })
 }
+function goParent(){
+    window.history.go(-1);
+}
