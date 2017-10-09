@@ -103,7 +103,7 @@ public class LoginController {
             String password = (String)request.getParameter("password");
             String passwordsure = (String)request.getParameter("passwordsure");
             String loginNameForm = (String)request.getParameter("loginName");
-            if(loginVo.getLoginname()!=loginNameForm){
+            if(!loginVo.getLoginname().equals(loginNameForm)){
                 return "fail";
             }
             if(password==null || "".equals(password)){
@@ -117,7 +117,7 @@ public class LoginController {
             User userResult = userRepository.findOne(Example.of(user));
             userResult.setPassword(MD5Util.MD5EncodeUTF8(password));
             userRepository.save(userResult);
-
+            request.getSession().invalidate();
             return "success";
         }catch (Exception e){
             e.printStackTrace();
