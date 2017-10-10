@@ -8,7 +8,7 @@ function  loginOut(obj) {
     $("#loginOut").find("img").attr("src","/image/lgo2.png");
     $.post("loginOut",{loginout:"out"},function (result) {
         if(result=="out"){
-            location.reload();
+            window.location.href="/";
         }
     })
 }

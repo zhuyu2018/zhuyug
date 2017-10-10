@@ -7,45 +7,50 @@
     <title>MEGEYU</title>
 </head>
 <body>
-    <div class="top-div">
-        <div id="loginOut" class="loginout-div" onmouseover="mouseThing(this);" onmouseout="mouseOutThing();" onclick="loginOut(this);">
-            <img src="/image/lgo2.png"/>
-        </div>
-        <div class="loginname-div" >
-            <a style="color: oldlace;" href="infoEdit" th:text="${loginName}">Tourist</a>
-
-        </div>
-
-    </div>
+    <div th:include="top :: html"></div>
 
     <div class="success-body-div">
 
-        <div class="success-left-div">
-            <table class="success-div-table">
-                <tr>
+        <div class="success-div-div">
+            <div>
+                <img class="ck-img" src="/image/shu.jpg"/>
 
-                    <td>书籍</td>
+            </div>
+            <span class="success-div-span">书籍</span>
+            <div class="br-div"><br/></div>
+            <table class="success-div-table" id="booktable">
+                <tr class="success-table-tr">
+                    <td><img src="/image/jiguang3.jpg"/><span class="gengduo-span">更多</span></td>
                 </tr>
 
             </table>
 
         </div>
-        <div class="success-center-div">
+        <div class="success-div-div">
+            <div>
+                <img  class="ck-img"  src="/image/wen.jpg"/>
 
-            <table class="success-div-table">
-                <tr>
-
-                    <td>文章</td>
+            </div>
+            <span class="success-div-span">文章</span>
+            <div class="br-div"><br/></div>
+            <table class="success-div-table" id="articletable">
+                <tr class="success-table-tr">
+                    <td><img src="/image/jiguang3.jpg"/><span class="gengduo-span">更多</span></td>
                 </tr>
 
             </table>
         </div>
-        <div class="success-right-div">
+        <div class="success-div-div">
+            <div>
+                <img  class="ck-img"  src="/image/bi.jpg"/>
 
-            <table class="success-div-table">
-                <tr>
+            </div>
+            <span class="success-div-span">觅语</span>
+            <div class="br-div"><br/></div>
+            <table class="success-div-table" id="miyutable">
+                <tr class="success-table-tr">
 
-                    <td>觅语</td>
+                    <td><img src="/image/jiguang3.jpg"/><span class="gengduo-span">更多</span></td>
                 </tr>
 
             </table>
@@ -77,6 +82,26 @@
 <script  src="/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script  src="/js/megayu.js" th:src="@{/js/megayu.js}"></script>
 <script>
+
+    $(function () {
+        queryBook();
+    })
+
+    function queryBook() {
+        $.post("/login/article/queryBook",{},function (result) {
+            if(result!=null){
+                var books = eval(result)
+
+                for(var i in books){
+                    var bookname = books[i].bookname;
+
+                    $("#booktable").append('<tr class="success-table-tr" ><td>'+bookname+'</td></tr>');
+                }
+
+            }
+        },"json")
+    }
+
 /*
     $(".login-modal-a").mouseout(function () {
         $("#loginModal").slideUp("slow");

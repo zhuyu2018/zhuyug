@@ -74,6 +74,7 @@ public class LoginController {
         LoginVo loginVo = LoginUtil.getLoginVo(request);
 //        String loginName = (String) request.getSession().getAttribute("loginName");
         model.addAttribute("loginName",loginVo.getLoginname());
+
         return "loginsuccess";
     }
 

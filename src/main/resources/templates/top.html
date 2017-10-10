@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/megayu.css" />
+    <title>MEGEYU</title>
+</head>
+<body>
+<div class="top-div">
+    <div id="loginOut" class="loginout-div" onmouseover="mouseThing(this);" onmouseout="mouseOutThing();" onclick="loginOut(this);">
+        <img src="/image/lgo2.png"/>
+    </div>
+    <div class="loginname-div" >
+        <a style="color: oldlace;" href="infoEdit" th:text="${loginName}">Tourist</a>
+
+    </div>
+
+</div>
+</body>
+<script  src="/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script  src="/js/megayu.js" th:src="@{/js/megayu.js}"></script>
+<script>
+    /*
+        $(".login-modal-a").mouseout(function () {
+            $("#loginModal").slideUp("slow");
+        })
+        function loginModalHide(){
+            $("#loginModal").slideToggle();
+        }
+        function loginModalShow() {
+            $("#loginModal").slideUp("slow");
+        }*/
+
+
+</script>
+</html>

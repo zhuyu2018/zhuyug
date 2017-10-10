@@ -65,34 +65,66 @@ tr{
     height: 80%;
     /*background-color: #0e90d2;*/
 }
-.success-left-div{
-    margin-top: 3%;
+/*.success-left-div{*/
+    /*margin-top: 5%;*/
+    /*margin-right: 10%;*/
+    /*width:20%;*/
+    /*height: 50%;*/
+    /*float: right;*/
+    /*!*background-color: rebeccapurple;*!*/
+    /*text-align: center;*/
+/*}*/
+.success-div-div{
+    margin-top: 4%;
     margin-right: 10%;
     width:20%;
     height: 50%;
     float: right;
-    background-color: rebeccapurple;
+    /*background-color: #559946;*/
     text-align: center;
 }
-.success-center-div{
-    margin-top: 3%;
-    margin-right: 10%;
-    width:20%;
-    height: 50%;
-    float: right;
-    background-color: #559946;
-    text-align: center;
-}
-.success-right-div{
-    margin-top: 3%;
-    margin-right: 10%;
-    width:20%;
-    height: 50%;
-    float: right;
-    background-color: #991e14;
-    text-align: center;
-}
+/*.success-right-div{*/
+    /*margin-top: 5%;*/
+    /*margin-right: 10%;*/
+    /*width:20%;*/
+    /*height: 50%;*/
+    /*float: right;*/
+    /*!*background-color: #991e14;*!*/
+    /*text-align: center;*/
+/*}*/
 .success-div-table{
     margin: auto;
-    border: 1px solid #808080;
+    /*border: 1px solid #808080;*/
+}
+
+.ck-img{
+    width: 25%;
+    cursor: pointer;
+}
+
+.success-table-tr{
+
+    border-bottom: 1px dashed #cccccc;
+}
+
+.success-div-span{
+    margin-left: 46%;
+    cursor: pointer;
+    font-size: small;
+}
+
+.span-table-hr{
+    background-color: #ffffff;
+}
+
+.br-div{
+    margin-top: 10%;
+}
+
+.gengduo-span{
+    cursor: pointer;
+    font-size: smaller;
+    color: orangered;
+    float: right;
+    font-family: cursive;
 }
