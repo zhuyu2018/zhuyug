@@ -122,9 +122,18 @@ tr{
 }
 
 .gengduo-span{
+    width: 90%;
     cursor: pointer;
     font-size: smaller;
-    color: orangered;
+    color: orange;
     float: right;
     font-family: cursive;
+}
+
+.index-td{
+    color: dodgerblue;
+}
+
+.table-a{
+    cursor: pointer;
 }

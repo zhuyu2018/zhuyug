@@ -20,7 +20,9 @@
             <div class="br-div"><br/></div>
             <table class="success-div-table" id="booktable">
                 <tr class="success-table-tr">
-                    <td><img src="/image/jiguang3.jpg"/><span class="gengduo-span">更多</span></td>
+                    <td><span class="gengduo-span">MORE</span></td>
+                    <td><img src="/image/jiguang4.jpg"/></td>
+
                 </tr>
 
             </table>
@@ -28,6 +30,7 @@
         </div>
         <div class="success-div-div">
             <div>
+
                 <img  class="ck-img"  src="/image/wen.jpg"/>
 
             </div>
@@ -35,7 +38,9 @@
             <div class="br-div"><br/></div>
             <table class="success-div-table" id="articletable">
                 <tr class="success-table-tr">
-                    <td><img src="/image/jiguang3.jpg"/><span class="gengduo-span">更多</span></td>
+                    <td><span class="gengduo-span">MORE</span></td>
+                    <td><img src="/image/jiguang4.jpg"/></td>
+
                 </tr>
 
             </table>
@@ -49,8 +54,9 @@
             <div class="br-div"><br/></div>
             <table class="success-div-table" id="miyutable">
                 <tr class="success-table-tr">
+                    <td><span class="gengduo-span">MORE</span></td>
+                    <td><img src="/image/jiguang4.jpg"/></td>
 
-                    <td><img src="/image/jiguang3.jpg"/><span class="gengduo-span">更多</span></td>
                 </tr>
 
             </table>
@@ -95,7 +101,7 @@
                 for(var i in books){
                     var bookname = books[i].bookname;
 
-                    $("#booktable").append('<tr class="success-table-tr" ><td>'+bookname+'</td></tr>');
+                    $("#booktable").append('<tr class="success-table-tr" ><td class="index-td">'+(parseInt(i)+1)+'</td><td><a class="table-a">'+bookname+'</a></td></tr>');
                 }
 
             }
