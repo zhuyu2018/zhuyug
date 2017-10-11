@@ -47,7 +47,7 @@
 }
 
 tr{
-    border-bottom: 1px solid #808080;
+    /*border-bottom: 1px solid #808080;*/
 }
 
 .align-center-div{
@@ -75,7 +75,7 @@ tr{
     /*text-align: center;*/
 /*}*/
 .success-div-div{
-    margin-top: 4%;
+    margin-top: 12%;
     margin-right: 10%;
     width:20%;
     height: 50%;
@@ -94,11 +94,12 @@ tr{
 /*}*/
 .success-div-table{
     margin: auto;
+    width: 78%;
     /*border: 1px solid #808080;*/
 }
 
 .ck-img{
-    width: 25%;
+    width: 41%;
     cursor: pointer;
 }
 
@@ -110,7 +111,10 @@ tr{
 .success-div-span{
     margin-left: 46%;
     cursor: pointer;
-    font-size: small;
+    font-size: larger;
+    font-weight: 600;
+    font-family: serif;
+    color: brown;
 }
 
 .span-table-hr{
@@ -118,7 +122,7 @@ tr{
 }
 
 .br-div{
-    margin-top: 10%;
+    margin-top: 30%;
 }
 
 .gengduo-span{
@@ -135,5 +139,7 @@ tr{
 }
 
 .table-a{
+    color: black;
     cursor: pointer;
+    font-family: 楷体;
 }

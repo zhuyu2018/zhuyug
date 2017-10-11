@@ -8,6 +8,10 @@ import com.megayu.repository.BookRepository;
 import com.megayu.util.LoginUtil;
 import com.megayu.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,4 +106,40 @@ public class ArticleController {
 //        return articleList;
         return articleRepository.queryArticleLimit(userid,type,10);
     }
+
+    @RequestMapping(value = "/openBook")
+    public String openBook(HttpServletRequest request , HttpServletResponse response, Model model){
+        String bookid = request.getParameter("bookid");
+        String bookname = request.getParameter("bookname");
+        model.addAttribute("bookid",bookid);
+        model.addAttribute("bookname",bookname);
+        return "article";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/queryArticlePage")
+    public String queryArticlePage(HttpServletRequest request , HttpServletResponse response, Model model){
+        LoginVo loginVo = LoginUtil.getLoginVo(request);
+        String page = request.getParameter("page");
+        String size = request.getParameter("rows");
+
+        int pagei = 0;
+        int sizei = 10;
+        if(page!=null && !"".equals(page)){
+            pagei = Integer.valueOf(page);
+        }
+        if(size!=null && !"".equals(size)){
+            sizei = Integer.valueOf(size);
+        }
+        String bookid = request.getParameter("bookid");
+        Page<Article> pages = null;
+        if(bookid!=null && !"".equals(bookid)){
+            Integer bid = Integer.valueOf(bookid);
+            Sort sort = new Sort(Sort.Direction.DESC, "createtime");
+            Pageable pageable = new PageRequest(pagei, sizei,sort);
+            pages = articleRepository.findByBookid(bid,pageable);
+        }
+        return new Gson().toJson(pages);
+    }
+
+
 }

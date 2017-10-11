@@ -84,6 +84,12 @@ public class LoginController {
         request.getSession().invalidate();
         return "out";
     }
+    @ResponseBody
+    @RequestMapping(value="/queryLoginName")
+    public String queryLoginName(HttpServletRequest request , HttpServletResponse response, Model model){
+        LoginVo loginVo = LoginUtil.getLoginVo(request);
+        return loginVo.getLoginname();
+    }
     @RequestMapping(value="infoEdit")
     public String userInfoEdit(HttpServletRequest request , HttpServletResponse response, Model model){
         try{
