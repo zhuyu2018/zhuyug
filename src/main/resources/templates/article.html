@@ -14,19 +14,31 @@
 
     <title>文章</title>
 </head>
-<body>
+<body style="text-align:center;background-color: #f6e2ba">
     <div th:include="top :: html"></div>
 
     <div>
         <input type="hidden" id="bookid" th:value="${bookid}"/>
         <input type="hidden" id="bookname" th:value="${bookname}"/>
     </div>
-    <div>
+    <!--<div>
         <table id="articleTable"></table>
         <div id="articleTablePage"></div>
+    </div>-->
+    <div class="book">
+        <div class="title-div">
+            <span th:text="${bookname}"></span>
+        </div>
+
+        <div class="book-div">
+            <table class="book-div-table">
+
+
+
+            </table>
+        </div>
+
     </div>
-
-
 
 </body>
 
@@ -44,8 +56,33 @@
 <script>
     $(function(){
         //页面加载完成之后执行
-        pageInit();
+       // pageInit();
+        initArticle();
     });
+    function initArticle() {
+        var bookid = $("#bookid").val();
+        $.post("/login/article/queryArticleList",{bookid : bookid},function (result) {
+            if(result!=null){
+                var articles =eval(result);
+                for(var i in articles){
+                    var articlename = articles[i].articlename;
+                    var xuhao = parseInt(i)+1;
+                    var yushu = parseInt(xuhao)%3;
+                    if(yushu==1){
+                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td">'+articlename+'</td></tr>');
+                    }else{
+                        $(".book-div tr:last").append('<td class="articlename-td">'+articlename+'</td>');
+
+                    }
+
+                }
+            }
+        },"json");
+
+    }
+
+
+
     function pageInit(){
         var bookname = $("#bookname").val();
         var bookid = $("#bookid").val();

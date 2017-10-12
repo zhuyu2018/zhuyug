@@ -143,3 +143,61 @@ tr{
     cursor: pointer;
     font-family: 楷体;
 }
+
+.book-article-div{
+    width: 309.3px;
+}
+
+.book-article-label{
+
+}
+
+.book-article-span{
+
+}
+
+.book-div{
+    margin:0 auto;
+    /*border:1px solid;*/
+    background-color: #fff3d9;
+    width: 928px;
+}
+
+.title-div{
+    margin:0 auto;
+    width: 928px;
+    text-align: center;
+    margin-top: 3%;
+}
+
+.title-span{
+    margin: auto;
+}
+
+.book{
+    border:1px solid #cccccc;
+    /*box-shadow: 0px -10px 0px 0px #ff0000,   !*上边阴影  红色*!*/
+                /*-10px 0px 0px 0px #3bee17,   !*左边阴影  绿色*!*/
+                /*10px 0px 0px 0px #2279ee,    !*右边阴影  蓝色*!*/
+                /*0px 10px 0px 0px #eede15;    !*下边阴影  黄色*!*/
+    margin:0 auto;
+    width: 978px;
+    /*height: 3000px;*/
+    background-color: #fff3d9;
+    margin-top: 3%;
+}
+
+.book-div-table{
+    margin: 0 auto;
+}
+
+.articlename-td{
+    width: 309px;
+    line-height: 40px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.articlename-tr{
+    /*height: 40px;*/
+    /*border-bottom: 1px solid #cccccc;*/
+}

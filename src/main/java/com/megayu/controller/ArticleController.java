@@ -123,13 +123,18 @@ public class ArticleController {
         String size = request.getParameter("rows");
 
         int pagei = 0;
-        int sizei = 10;
+        int sizei = 100;
         if(page!=null && !"".equals(page)){
             pagei = Integer.valueOf(page);
         }
         if(size!=null && !"".equals(size)){
             sizei = Integer.valueOf(size);
         }
+
+        if(pagei>0){
+            pagei--;
+        }
+
         String bookid = request.getParameter("bookid");
         Page<Article> pages = null;
         if(bookid!=null && !"".equals(bookid)){
@@ -138,7 +143,21 @@ public class ArticleController {
             Pageable pageable = new PageRequest(pagei, sizei,sort);
             pages = articleRepository.findByBookid(bid,pageable);
         }
-        return new Gson().toJson(pages);
+        List<Article> articleList = pages.getContent();
+        return new Gson().toJson(articleList);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/queryArticleList")
+    public String queryArticleList(HttpServletRequest request , HttpServletResponse response, Model model){
+        String bookid = request.getParameter("bookid");
+        Integer bid = 0;
+        if(bookid!=null && !"".equals(bookid)){
+            bid = Integer.valueOf(bookid);
+        }
+        List<Article> articleList = articleRepository.findByBookid(bid);
+        return new Gson().toJson(articleList);
     }
 
 
