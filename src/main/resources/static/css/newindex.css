@@ -1,0 +1,43 @@
+.center-div{
+    margin-top: 3%;
+    height: 466px;
+    /*background-color: #0e90d2;*/
+    /*background-image: image("/image/311151.jpg");*/
+    border-bottom: 1px solid #cccccc;
+    background: url(../image/311151.jpg) no-repeat ;
+}
+.footer-div{
+    position:fixed;
+    bottom:2px;
+    left: 46%;
+    /*border-bottom: 1px solid #cccccc;*/
+}
+.footer-div-a{
+    color: #cccccc;
+    margin: 0 auto;
+    font-size: smaller;
+}
+
+.center-div-login-div{
+    /*filter:alpha(opacity=60);     !*60就是60%的透明度*!*/
+    /*opacity:0.6;                 !*0.6也是60%的透明度意思*!*/
+    background:rgba(255,251,240,0.9);
+    width: 364px;
+    height: 340px;
+    margin-top: 52px;
+    float: right;
+    margin-right: 15%;
+    /*background-color: #ffffff;*/
+    border: 1px solid #cccccc;
+}
+
+.center-div-login-span{
+    font-size: large;
+    margin-top: 20px;
+}
+
+.center-div-login-img{
+    margin-top: -9px;
+    border: 1px solid #cccccc;
+    height: 37.5px;
+}

@@ -13,12 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 public class MegayuController {
 
     @RequestMapping(value = "/")
+    public String newIndex(HttpServletRequest request , HttpServletResponse response,Model model){
+
+        String name = "apple";
+        model.addAttribute("name",name);
+        return "newindex";
+    }
+
+    @RequestMapping(value = "/index")
     public String index(HttpServletRequest request , HttpServletResponse response,Model model){
 
         String name = "apple";
         model.addAttribute("name",name);
         return "index";
     }
+
     @RequestMapping(value = "/welcome")
     public String welcome(HttpServletRequest request , HttpServletResponse response,Model model){
 
