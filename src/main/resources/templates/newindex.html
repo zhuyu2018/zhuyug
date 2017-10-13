@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" style="height:100%">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/newindex.css" />
-    <title>MEGAYU</title>
+    <title>觅语</title>
 </head>
-<body style="text-align:center;">
+<body style="text-align:center;height:100%">
 <!--/*@thymesVar id="name" type="java.lang.String"*/-->
 
 
 <div style="height: 43px;margin-top: 9px;">
-    <span style="float: left;margin-left: 15%;margin-top: 1.5%;" th:text="|Hello! Welcome to MEGAYU |" >HELLO</span>
+    <span style="float: left;margin-left: 15%;margin-top: 1.5%;"><span style="font-size: xx-large;color: #942a25">觅语</span><span style="font-family: cursive;font-size: smaller;">&nbsp;&nbsp;天青青兮欲雨，水澹澹兮生烟</span></span>
+    <!--<span style="float: left;margin-left: 15%;margin-top: 1.5%;"><span style="font-size: xx-large;color: #942a25">Megayu</span><span>&nbsp;觅语</span></span>-->
+    <!--<span style="float: left;margin-left: 15%;margin-top: 1.5%;" th:text="|Hello! Welcome to MEGAYU |" ><img src="image/shuye1.jpg"/></span>-->
     <!--<div style="float: right;width: 28px;margin-right: 5px;margin-top: 2px;" onclick="registerModal();" >-->
         <!--<button  class="btn btn-info" style="width: 60px;height: 25px;font-size: smaller;" >登录</button>-->
         <!--&lt;!&ndash;<img style="width: 26px;margin-right: 1px;" id="xing" src="image/xing.jpg"/>&ndash;&gt;-->
@@ -48,7 +50,7 @@
 
 </div>
 
-<div class="footer-div"><a class="footer-div-a">为了我爱的人@MEGAYU</a></div>
+<div class="footer-div"><a class="footer-div-a">为我爱的人@MEGAYU</a></div>
 <!--<div id="modalclose"><iframe frameborder="0"  scrolling="no" src="welcome" th:href="@{welcome}" width="100%" height="500px"></iframe></div>-->
 
 <div id="modal" class="modal" style="display: none;width: 251px;margin-top: 174px;margin-left: -130px;" onblur="modalClose();">
@@ -138,8 +140,8 @@
         });
     }
     function toLogin() {
-        var loginName = $("#loginName").val();
-        var password = $("#password").val();
+        var loginName = $("#loginNameDiv").val();
+        var password = $("#passwordDiv").val();
         if(loginName==null || loginName=="" || password==null || password==""){
             alert("请输入用户名和密码");
             return;

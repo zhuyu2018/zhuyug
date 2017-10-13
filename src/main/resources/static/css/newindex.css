@@ -1,10 +1,13 @@
 .center-div{
-    margin-top: 3%;
-    height: 466px;
+    margin-top: 2.5%;
+    height: 76%;
+    /*position:fixed;*/
     /*background-color: #0e90d2;*/
     /*background-image: image("/image/311151.jpg");*/
     border-bottom: 1px solid #cccccc;
-    background: url(../image/311151.jpg) no-repeat ;
+    border-top: 1px solid #cccccc;
+    background: url(../image/111111.jpg) no-repeat ;
+    background-size:100% auto;
 }
 .footer-div{
     position:fixed;
@@ -21,10 +24,10 @@
 .center-div-login-div{
     /*filter:alpha(opacity=60);     !*60就是60%的透明度*!*/
     /*opacity:0.6;                 !*0.6也是60%的透明度意思*!*/
-    background:rgba(255,251,240,0.9);
+    background:rgba(255,251,240,0.8);
     width: 364px;
     height: 340px;
-    margin-top: 52px;
+    margin-top: 8%;
     float: right;
     margin-right: 15%;
     /*background-color: #ffffff;*/
