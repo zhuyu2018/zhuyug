@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" style="width:100%;height: 100%">
 <head>
     <meta charset="UTF-8"/>
 
@@ -12,9 +12,9 @@
 
 
 
-    <title>文章</title>
+    <title>觅语-文章</title>
 </head>
-<body style="text-align:center;background-color: #f6e2ba">
+<body style="text-align:center;width:100%;height: 100%">
     <div th:include="top :: html"></div>
 
     <div>
@@ -68,10 +68,11 @@
                     var articlename = articles[i].articlename;
                     var xuhao = parseInt(i)+1;
                     var yushu = parseInt(xuhao)%3;
+                    var zhangxu = "第"+xuhao+"章   ";
                     if(yushu==1){
-                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td">'+articlename+'</td></tr>');
+                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a">'+zhangxu+articlename+'</a></td></tr>');
                     }else{
-                        $(".book-div tr:last").append('<td class="articlename-td">'+articlename+'</td>');
+                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >'+zhangxu+articlename+'</a></td>');
 
                     }
 
