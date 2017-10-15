@@ -14,11 +14,11 @@
         <!--<div class="success-div2">-->
         <div class="success-div-div">
             <div>
-                <img class="ck-img" onclick="openBookSubject()" src="/image/shu1.png"/>
+                <img class="ck-img" onclick="openBookSubject('0')" src="/image/shu1.png"/>
 
             </div>
 
-            <div class="br-div"><span onclick="openBookSubject()" class="success-div-span">书 籍</span><br/></div>
+            <div class="br-div"><span onclick="openBookSubject('0')" class="success-div-span">书 籍</span><br/></div>
             <table class="success-div-table" id="booktable">
                 <tr class="success-table-top-tr">
                     <td><span class="gengduo-span">&nbsp;</span></td>
@@ -179,9 +179,7 @@
         },"json")
     }
 
-    function openBookSubject() {
-        self.location.href="/login/book/openBookSubject";
-    }
+
 
 /*
     $(".login-modal-a").mouseout(function () {

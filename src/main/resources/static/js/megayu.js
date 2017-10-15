@@ -34,3 +34,7 @@ function compare(a,b,c) {
         return c;
     }
 }
+
+function openBookSubject(page) {
+    self.location.href="/login/book/openBookSubject?page="+page;
+}

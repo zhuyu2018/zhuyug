@@ -39,7 +39,7 @@ public class BookController {
             }else {
                 pageNum = "1";
             }
-            model.addAttribute("pageNum",pageNum);
+            model.addAttribute("page",pageNum);
             return "book";
         }
 
@@ -53,7 +53,7 @@ public class BookController {
         int pagei = 0;
         int sizei = 30;
         if(page!=null && !"".equals(page)){
-            pagei = Integer.valueOf(page);
+            pagei = Integer.valueOf(page)-1;
         }
 //        if(size!=null && !"".equals(size)){
 //            sizei = Integer.valueOf(size);

@@ -55,26 +55,52 @@
         initBook();
     });
     function initBook() {
+        var page = $("#page").val();
 //        var bookid = $("#bookid").val();
-        $.post("/login/book/queryBookList",{},function (result) {
+        $.post("/login/book/queryBookList",{page:page},function (result) {
             if(result!=null){
                 var books =eval(result);
                 var html = "";
                 var booksubjectheight = 200;
+                var imgxh = 1;
+                var flag = false;
                 for(var i in books){
+                    if(flag!=true){
+                        flag = true;
+                    }
                     booksubjectheight += 200;
                     var bookname = books[i].bookname;
                     var authorname = books[i].authorname;
                     var remark = books[i].remark;
+                    var bookid = books[i].bookid;
                     var time1 = books[i].time1;
                     var xuhao = parseInt(i)+1;
-                    html += '<div class="book-subject-div"><span>'+bookname+'</span><span>'+authorname+'</span><span>'+remark+'</span><span>'+time1+'</span></div>';
 
+                    html += '<div class="book-subject-div"><div class="ook-subject-div1"><img class="jieqi-img" src="/image/24jieqi/'+imgxh+'.png"/></div><div class="ook-subject-div2"><br/><br/><span class="book-subject-bookname-span"><a style="color: #000;cursor: pointer" onclick="openBook(\''+bookid+'\',\''+bookname+'\');">'+bookname+'</a></span><br/><span class="book-subject-authorname-span"><span class="book-subject-zuozhe-span">作者：</span>'+authorname+'</span><span class="book-subject-time-span"><span class="book-subject-shijian-span">时间：</span>'+time1+'</span><br/><span class="book-subject-remake-span"> 《'+bookname+'》内容简介：'+remark+'</span></div></div>';
 
+                    imgxh = imgxh+1;
+                    if(imgxh>24){
+                        imgxh = 1;
+                    }
                 }
 
+                var later = page;
+                var front = parseInt(page)-2;
+
+                if(flag){
+                    if(page==1){
+                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" style="cursor: auto;color: #cccccc;">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openBookSubject('+later+')">下一页</a></span></div>';
+                    }else{
+                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openBookSubject('+later+')">下一页</a></span></div>';
+                    }
+                }else{
+                    html += '<div class="book-subject-div-page"><span class="book-subject-page-span1">没数据了，<a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span></div>';
+                }
                 $(".book-subject-div").append(html);
                 $(".book-subject").css("height",booksubjectheight+"px");
+            }else{
+                var front = parseInt(page)-2;
+                $(".book-subject-div").append('<div class="book-subject-div-page"><span class="book-subject-page-span1">没数据了，<a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span></div>');
             }
         },"json");
 

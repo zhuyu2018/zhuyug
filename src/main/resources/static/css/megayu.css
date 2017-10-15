@@ -275,8 +275,15 @@ tr{
     width: 700px;
     height: 200px;
     margin: 0 auto;
-    border-top: 1px solid #cccccc;
+    /*border-top: 1px solid #cccccc;*/
     border-bottom: 1px solid #cccccc;
+}
+.book-subject-div-page{
+    width: 700px;
+    height: 200px;
+    margin: 0 auto;
+    /*border-top: 1px solid #cccccc;*/
+    /*border-bottom: 1px solid #cccccc;*/
 }
 .book-subject{
     /*border:1px solid #cccccc;*/
@@ -288,6 +295,64 @@ tr{
     width: 978px;
     /*height: 3000px;*/
     background:rgba(255,251,240,0.8);
-    margin-top: 3%;
+    margin-top: 5%;
     position:relative;z-index:3;
+}
+.jieqi-img{
+    width: 150px;
+    margin-top: 25px;
+}
+.ook-subject-div1{
+    width: 200px;
+    height: 200px;
+    float: right;
+}
+.ook-subject-div2{
+    width: 500px;
+    height: 200px;
+}
+.book-subject-bookname-span{
+    float: left;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+}
+.book-subject-zuozhe-span{
+    color: #5eb4d9;
+    font-weight: 600;
+}
+.book-subject-authorname-span{
+    font-size:xx-small;
+    margin-left: 3px;
+    margin-top: 15px;
+}
+.book-subject-remake-span{
+    text-align: left;
+    font-size: xx-small;
+    text-indent: 24px;
+    color: #888;
+    padding-left: 3px;
+}
+.book-subject-time-span{
+    font-size:xx-small;
+    margin-left: 88px;
+    margin-top: 15px;
+}
+.book-subject-shijian-span{
+    color: #5eb4d9;
+    font-weight: 600;
+}
+.book-subject-page-a1{
+    cursor: pointer;
+}
+.book-subject-page-a2{
+    cursor: pointer;
+}
+.book-subject-page-span1{
+    margin-left: 543px;
+    margin-top: 50px;
+}
+.book-subject-page-span2{
+    /*margin-left: 580px;*/
+    margin-top: 50px;
 }
