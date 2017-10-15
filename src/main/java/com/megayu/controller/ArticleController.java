@@ -5,6 +5,7 @@ import com.megayu.entity.Article;
 import com.megayu.entity.Book;
 import com.megayu.repository.ArticleRepository;
 import com.megayu.repository.BookRepository;
+import com.megayu.util.DateUtil;
 import com.megayu.util.LoginUtil;
 import com.megayu.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.rmi.runtime.Log;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,7 +26,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -81,8 +86,27 @@ public class ArticleController {
 //        });
 
 //        return books;
-        return bookRepository.queryBookLimit(userid,10);
+        List<Book> books = bookRepository.queryBookLimit(userid,10);
+        if(books!=null && books.size()>0){
+            for(Book book:books){
+                book.setTime1(DateUtil.editDate(book.getCreatetime()));
+            }
+        }
+
+        return books;
     }
+
+//    public String editDate(Date date){
+//        String yearstr = new SimpleDateFormat("yyyy").format(date);
+//        String createtimestr = new SimpleDateFormat("MM月dd日 HH:mm").format(date);
+//        Calendar now = Calendar.getInstance();
+//        int year =  now.get(Calendar.YEAR);
+//        if(year!=Integer.valueOf(yearstr)){
+//            //不是今年
+//            createtimestr = yearstr+"年"+createtimestr;
+//        }
+//        return createtimestr;
+//    }
 
     public List<Article> queryArticle(final Integer type, final Integer userid){
 //        List<Article> articleList = articleRepository.findAll(new Specification<Article>() {
@@ -104,7 +128,13 @@ public class ArticleController {
 //
 //        });
 //        return articleList;
-        return articleRepository.queryArticleLimit(userid,type,10);
+        List<Article> articles = articleRepository.queryArticleLimit(userid,type,10);
+        if(articles!=null && articles.size()>0){
+            for(Article article : articles){
+                article.setTime1(DateUtil.editDate(article.getCreatetime()));
+            }
+        }
+        return articles;
     }
 
     @RequestMapping(value = "/openBook")
@@ -159,6 +189,7 @@ public class ArticleController {
         List<Article> articleList = articleRepository.findByBookid(bid);
         return new Gson().toJson(articleList);
     }
+
 
 
 }

@@ -14,3 +14,23 @@ function goParent(){
 function openBook(bookid,bookname) {
     self.location.href="/login/article/openBook?bookid=" + bookid + "&bookname="+bookname;
 }
+function openMiyu(miyuid,miyuname) {
+    self.location.href="/login/article/openMiyu?miyuid=" + miyuid + "&miyuname="+miyuname;
+}
+function openArticle(articleid,articlename) {
+    self.location.href="/login/article/openArticle?articleid=" + articleid + "&articlename="+articlename;
+}
+
+function compare(a,b,c) {
+    if (parseInt(a) > parseInt(b)) {
+        if (parseInt(a) > parseInt(c)) {
+            return a;
+        }
+        return c;
+    } else {
+        if (parseInt(b) > parseInt(c)) {
+            return b;
+        }
+        return c;
+    }
+}

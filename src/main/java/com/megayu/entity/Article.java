@@ -24,7 +24,35 @@ public class Article {
     private Integer       edituser;
     private Integer    author;
     private String        authorname;
+    private Integer publicstatus;
 
+
+    private String time1;
+    private String time2;
+
+    public String getTime1() {
+        return time1;
+    }
+
+    public void setTime1(String time1) {
+        this.time1 = time1;
+    }
+
+    public String getTime2() {
+        return time2;
+    }
+
+    public void setTime2(String time2) {
+        this.time2 = time2;
+    }
+
+    public Integer getPublicstatus() {
+        return publicstatus;
+    }
+
+    public void setPublicstatus(Integer publicstatus) {
+        this.publicstatus = publicstatus;
+    }
     public Integer getId() {
         return id;
     }

@@ -72,8 +72,11 @@ public class LoginController {
     @RequestMapping(value = "/loginSuccess")
     public String loginSuccess(HttpServletRequest request , HttpServletResponse response, Model model){
         LoginVo loginVo = LoginUtil.getLoginVo(request);
+        if(loginVo!=null){
+
 //        String loginName = (String) request.getSession().getAttribute("loginName");
-        model.addAttribute("loginName",loginVo.getLoginname());
+            model.addAttribute("loginName",loginVo.getLoginname());
+        }
 
         return "loginsuccess";
     }
