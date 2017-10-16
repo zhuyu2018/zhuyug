@@ -295,7 +295,7 @@ tr{
     width: 978px;
     /*height: 3000px;*/
     background:rgba(255,251,240,0.8);
-    margin-top: 5%;
+    margin-top: 57px;
     position:relative;z-index:3;
 }
 .jieqi-img{
@@ -361,5 +361,19 @@ tr{
     margin: 0 auto;
     height: 73px;
     margin-top: -20px;
+    position: relative;z-index: 3;
+}
+
+.book-manage{
+    width: 978px;
+    margin: 0 auto;
+    height: 900px;
+    margin-top: 120px;
+    position: relative;z-index: 3;
+}
+.book-manage-div{
+    width: 900px;
+    margin: 0 auto;
+    height: 900px;
     position: relative;z-index: 3;
 }

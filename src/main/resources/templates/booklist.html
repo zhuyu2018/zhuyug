@@ -12,30 +12,31 @@
 
 
 
-    <title>觅语-读书</title>
+    <title>觅语-书籍管理</title>
 </head>
 <body style="text-align:center;width:100%;height: 100%">
 <div th:include="top :: html"></div>
 
-<div>
-    <input type="hidden" id="bookid" th:value="${bookid}"/>
-    <input type="hidden" id="bookname" th:value="${bookname}"/>
-    <input type="hidden" id="page" th:value="${page}"/>
-</div>
+<!--<div>-->
+    <!--<input type="hidden" id="bookid" th:value="${bookid}"/>-->
+    <!--<input type="hidden" id="bookname" th:value="${bookname}"/>-->
+    <!--<input type="hidden" id="page" th:value="${page}"/>-->
+<!--</div>-->
 <!--<div>
     <table id="articleTable"></table>
     <div id="articleTablePage"></div>
 </div>-->
 
-<div class="book-subject-chuangzuo-div">
-    <button  class="btn" style="width: 60px;height: 30px;margin-top: 77px;float: right;margin-right: 14px;"  onclick="toWork();">创作</button>
-</div>
+<!--<div class="book-subject-chuangzuo-div">-->
+    <!--<button  class="btn" style="width: 60px;height: 30px;margin-top: 77px;float: right;margin-right: 14px;"  onclick="toWork();">创作</button>-->
+<!--</div>-->
 
-<div class="book-subject">
+<div class="book-manage">
 
 
-       <div class="book-subject-div">
-
+       <div class="book-manage-div">
+           <table id="bookTable"></table>
+           <div id="bookPage"></div>
        </div>
 
 </div>
@@ -56,8 +57,8 @@
 <script>
     $(function(){
         //页面加载完成之后执行
-        // pageInit();
-        initBook();
+         pageInit();
+//        initBook();
     });
     function initBook() {
         var page = $("#page").val();
@@ -113,34 +114,34 @@
 
 
 
-//    function pageInit(){
+    function pageInit(){
 //        var bookname = $("#bookname").val();
 //        var bookid = $("#bookid").val();
-//        //创建jqGrid组件
-//        $("#articleTable").jqGrid(
-//            {
-//                url : '/login/article/queryArticlePage',//组件创建完成之后请求数据的url
-//                postData : {bookid : bookid},
-//                datatype : "json",//请求数据返回的类型。可选json,xml,txt
-//                colNames : [ '序号', '章节名称', '创建时间'],//jqGrid的列显示名字
-//                colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
-//                    {name : 'id',index : 'id',width : 55},
-//                    {name : 'articlename',index : 'articlename',width : 90},
-//                    {name : 'createtime',index : 'createtime',width : 100}
-//                ],
-//                rowNum : 10,//一页显示多少条
-//                rowList : [ 10, 20, 30 ],//可供用户选择一页显示多少条
-//                pager : '#articleTablePage',//表格页脚的占位符(一般是div)的id
-//                sortname : 'id',//初始化的时候排序的字段
-//                sortorder : "desc",//排序方式,可选desc,asc
-//                mtype : "post",//向后台请求数据的ajax的类型。可选post,get
-//                viewrecords : true,
-//                caption : bookname//表格的标题名字
-//            });
-//        /*创建jqGrid的操作按钮容器*/
-//        /*可以控制界面上增删改查的按钮是否显示*/
-//        $("#articleTable").jqGrid('navGrid', '#articleTablePage', {edit : false,add : false,del : false});
-//    }
+        //创建jqGrid组件
+        $("#bookTable").jqGrid(
+            {
+                url : '/login/article/queryArticlePage',//组件创建完成之后请求数据的url
+                postData : {},
+                datatype : "json",//请求数据返回的类型。可选json,xml,txt
+                colNames : [ '序号', '章节名称', '创建时间'],//jqGrid的列显示名字
+                colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
+                    {name : 'id',index : 'id',width : 55},
+                    {name : 'articlename',index : 'articlename',width : 90},
+                    {name : 'createtime',index : 'createtime',width : 100}
+                ],
+                rowNum : 10,//一页显示多少条
+                rowList : [ 10, 20, 30 ],//可供用户选择一页显示多少条
+                pager : '#bookTable',//表格页脚的占位符(一般是div)的id
+                sortname : 'id',//初始化的时候排序的字段
+                sortorder : "desc",//排序方式,可选desc,asc
+                mtype : "post",//向后台请求数据的ajax的类型。可选post,get
+                viewrecords : true,
+                caption : bookname//表格的标题名字
+            });
+        /*创建jqGrid的操作按钮容器*/
+        /*可以控制界面上增删改查的按钮是否显示*/
+        $("#bookTable").jqGrid('navGrid', '#bookPage', {edit : false,add : false,del : false});
+    }
 
 
 </script>
