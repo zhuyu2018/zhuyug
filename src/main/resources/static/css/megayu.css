@@ -356,3 +356,10 @@ tr{
     /*margin-left: 580px;*/
     margin-top: 50px;
 }
+.book-subject-chuangzuo-div{
+    width: 978px;
+    margin: 0 auto;
+    height: 73px;
+    margin-top: -20px;
+    position: relative;z-index: 3;
+}
