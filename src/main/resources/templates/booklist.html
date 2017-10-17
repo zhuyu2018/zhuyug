@@ -58,76 +58,26 @@
     $(function(){
         //页面加载完成之后执行
          pageInit();
-//        initBook();
     });
-    function initBook() {
-        var page = $("#page").val();
-//        var bookid = $("#bookid").val();
-        $.post("/login/book/queryBookList",{page:page},function (result) {
-            if(result!=null){
-                var books =eval(result);
-                var html = "";
-                var booksubjectheight = 200;
-                var imgxh = 1;
-                var flag = false;
-                for(var i in books){
-                    if(flag!=true){
-                        flag = true;
-                    }
-                    booksubjectheight += 200;
-                    var bookname = books[i].bookname;
-                    var authorname = books[i].authorname;
-                    var remark = books[i].remark;
-                    var bookid = books[i].bookid;
-                    var time1 = books[i].time1;
-                    var xuhao = parseInt(i)+1;
-
-                    html += '<div class="book-subject-div"><div class="ook-subject-div1"><img class="jieqi-img" src="/image/24jieqi/'+imgxh+'.png"/></div><div class="ook-subject-div2"><br/><br/><span class="book-subject-bookname-span"><a style="color: #000;cursor: pointer" onclick="openBook(\''+bookid+'\',\''+bookname+'\');">'+bookname+'</a></span><br/><span class="book-subject-authorname-span"><span class="book-subject-zuozhe-span">作者：</span>'+authorname+'</span><span class="book-subject-time-span"><span class="book-subject-shijian-span">时间：</span>'+time1+'</span><br/><span class="book-subject-remake-span"> 《'+bookname+'》内容简介：'+remark+'</span></div></div>';
-
-                    imgxh = imgxh+1;
-                    if(imgxh>24){
-                        imgxh = 1;
-                    }
-                }
-
-                var later = page;
-                var front = parseInt(page)-2;
-
-                if(flag){
-                    if(page==1){
-                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" style="cursor: auto;color: #cccccc;">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openBookSubject('+later+')">下一页</a></span></div>';
-                    }else{
-                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openBookSubject('+later+')">下一页</a></span></div>';
-                    }
-                }else{
-                    html += '<div class="book-subject-div-page"><span class="book-subject-page-span1">没数据了，<a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span></div>';
-                }
-                $(".book-subject-div").append(html);
-                $(".book-subject").css("height",booksubjectheight+"px");
-            }else{
-                var front = parseInt(page)-2;
-                $(".book-subject-div").append('<div class="book-subject-div-page"><span class="book-subject-page-span1">没数据了，<a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span></div>');
-            }
-        },"json");
-
-    }
-
-
 
     function pageInit(){
-//        var bookname = $("#bookname").val();
-//        var bookid = $("#bookid").val();
         //创建jqGrid组件
         $("#bookTable").jqGrid(
             {
-                url : '/login/article/queryArticlePage',//组件创建完成之后请求数据的url
+                url : '/login/bookManage/queryBookPage',//组件创建完成之后请求数据的url
                 postData : {},
+                rownumbers: true,
                 datatype : "json",//请求数据返回的类型。可选json,xml,txt
-                colNames : [ '序号', '章节名称', '创建时间'],//jqGrid的列显示名字
+                colNames : [  '章节名称','内容简介','章数','最新章节','作者','创建时间', '修改时间'],//jqGrid的列显示名字
                 colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
-                    {name : 'id',index : 'id',width : 55},
-                    {name : 'articlename',index : 'articlename',width : 90},
-                    {name : 'createtime',index : 'createtime',width : 100}
+//                    {name : 'id',index : 'id',width : 55,hide:true},
+                    {name : 'bookname',index : 'bookname',width : 90},
+                    {name : 'remark',index : 'remark',width : 230},
+                    {name : 'articleCount',index : 'articleCount',width : 50},
+                    {name : 'newArticleName',index : 'newArticleName',width : 50},
+                    {name : 'authorname',index : 'authorname',width : 60},
+                    {name : 'createtime',index : 'createtime',width : 100},
+                    {name : 'updatetime',index : 'updatetime',width : 100}
                 ],
                 rowNum : 10,//一页显示多少条
                 rowList : [ 10, 20, 30 ],//可供用户选择一页显示多少条
@@ -135,12 +85,15 @@
                 sortname : 'id',//初始化的时候排序的字段
                 sortorder : "desc",//排序方式,可选desc,asc
                 mtype : "post",//向后台请求数据的ajax的类型。可选post,get
-                viewrecords : true,
-                caption : bookname//表格的标题名字
+                autowidth: true,
+                shrinkToFit: true,
+                height: 'auto',
+                viewrecords : true
+//                caption : bookname//表格的标题名字
             });
         /*创建jqGrid的操作按钮容器*/
         /*可以控制界面上增删改查的按钮是否显示*/
-        $("#bookTable").jqGrid('navGrid', '#bookPage', {edit : false,add : false,del : false});
+        $("#bookTable").jqGrid('navGrid', '#bookPage', {edit : true,add : true,del : false});
     }
 
 

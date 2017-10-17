@@ -23,4 +23,6 @@ public interface BookRepository extends JpaRepository<Book,Long> ,JpaSpecificati
 //    List<Book> findByUser(Integer userid);
 
     Page<Book> findByCreateuserOrPublicstatus(Integer createuser, int publicstatus, Pageable pageable);
+
+    Page<Book> findByCreateuser(Integer createuser, Pageable pageable);
 }
