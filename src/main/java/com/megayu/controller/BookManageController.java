@@ -43,19 +43,17 @@ public class BookManageController {
     @RequestMapping(value = "/queryBookPage")
     public String queryBookPage(HttpServletRequest request , HttpServletResponse response, Model model){
         LoginVo loginVo = LoginUtil.getLoginVo(request);
-        String page = request.getParameter("page");
-        String size = request.getParameter("rows");
+        Integer page = Integer.valueOf(request.getParameter("page"));
+        Integer rows = Integer.valueOf(request.getParameter("rows"));
 
-        int pagei = 0;
-        int sizei = 30;
-        if(page!=null && !"".equals(page)){
-            pagei = Integer.valueOf(page);
+        if(page==null){
+            page=1;
         }
-        if(size!=null && !"".equals(size)){
-            sizei = Integer.valueOf(size);
+        if(rows==null||rows<0){
+            rows= 10;
         }
         Sort sort = new Sort(Sort.Direction.DESC, "createtime");
-        Pageable pageable = new PageRequest(pagei, sizei,sort);
+        Pageable pageable = new PageRequest(page-1, rows,sort);
         Page<Book> pages = bookRepository.findByCreateuser(loginVo.getId(),pageable);
         List<Book> bookList = pages.getContent();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
@@ -79,6 +77,12 @@ public class BookManageController {
                 resultList.add(map);
             }
         }
-        return new Gson().toJson(resultList);
+        Map map = new HashMap();
+        map.put("page",page);
+        map.put("rows",rows);
+        map.put("totalCount",pages.getTotalElements());
+        map.put("dataList",resultList);
+        map.put("totalpages",pages.getTotalPages());
+        return new Gson().toJson(map);
     }
 }

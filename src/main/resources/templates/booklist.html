@@ -5,7 +5,7 @@
 
     <!-- jqGrid组件基础样式包-必要 -->
     <link rel="stylesheet" href="/css/ui.jqgrid.css" />
-
+    <link rel="stylesheet" href="/css/bootstrap.css" />
     <!-- jqGrid主题包-非必要 -->
     <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
     <link rel="stylesheet" href="/css/redmond/jquery-ui-1.8.16.custom.css" />
@@ -58,8 +58,13 @@
     $(function(){
         //页面加载完成之后执行
          pageInit();
+         var shuyeleftwidth = $("#shuyeID").offset().left - $(document).scrollLeft();
+        $(".book-manage-div").css("left",(parseInt(shuyeleftwidth)-1000)+"px");
     });
-
+    $(window).resize(function () {
+        var shuyeleftwidth = $("#shuyeID").offset().left - $(document).scrollLeft();
+        $(".book-manage-div").css("left",(parseInt(shuyeleftwidth)-1000)+"px");
+    })
     function pageInit(){
         //创建jqGrid组件
         $("#bookTable").jqGrid(
@@ -67,6 +72,7 @@
                 url : '/login/bookManage/queryBookPage',//组件创建完成之后请求数据的url
                 postData : {},
                 rownumbers: true,
+                styleUI: 'Bootstrap',
                 datatype : "json",//请求数据返回的类型。可选json,xml,txt
                 colNames : [  '章节名称','内容简介','章数','最新章节','作者','创建时间', '修改时间'],//jqGrid的列显示名字
                 colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
@@ -86,8 +92,15 @@
                 sortorder : "desc",//排序方式,可选desc,asc
                 mtype : "post",//向后台请求数据的ajax的类型。可选post,get
                 autowidth: true,
+                jsonReader: {
+                    //   很重要 定义了 后台分页参数的名字。
+                    root:"dataList",
+                    total:"totalpages",          //   很重要 定义了 后台分页参数的名字。
+                    records:"totalCount",
+                    repeatitems : false
+                },
                 shrinkToFit: true,
-                height: 'auto',
+                height: '260',
                 viewrecords : true
 //                caption : bookname//表格的标题名字
             });
