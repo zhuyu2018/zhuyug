@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <!-- jqGrid主题包-非必要 -->
     <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
-    <link rel="stylesheet" href="/css/redmond/jquery-ui-1.8.16.custom.css" />
+    <link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+    <!--<link rel="stylesheet" href="/css/flick/jquery-ui-1.8.16.custom.css" />-->
 
-
+    <!--<style>.ui-jqgrid tr.jqgrow{height:30px}</style>-->
 
     <title>觅语-书籍管理</title>
 </head>
@@ -65,6 +66,7 @@
         var shuyeleftwidth = $("#shuyeID").offset().left - $(document).scrollLeft();
         $(".book-manage-div").css("left",(parseInt(shuyeleftwidth)-1000)+"px");
     })
+
     function pageInit(){
         //创建jqGrid组件
         $("#bookTable").jqGrid(
@@ -103,6 +105,7 @@
                 height: '260',
                 viewrecords : true
 //                caption : bookname//表格的标题名字
+
             });
         /*创建jqGrid的操作按钮容器*/
         /*可以控制界面上增删改查的按钮是否显示*/
