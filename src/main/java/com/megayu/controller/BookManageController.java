@@ -13,11 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -38,6 +40,10 @@ public class BookManageController {
 
         return "booklist";
     }
+    @RequestMapping(value = "/openAddBook")
+    public String openAddBook(HttpServletRequest request , HttpServletResponse response, Model model){
+        return "addbook";
+    }
 
     @ResponseBody
     @RequestMapping(value = "/queryBookPage")
@@ -45,16 +51,32 @@ public class BookManageController {
         LoginVo loginVo = LoginUtil.getLoginVo(request);
         Integer page = Integer.valueOf(request.getParameter("page"));
         Integer rows = Integer.valueOf(request.getParameter("rows"));
-
+        String bookname = request.getParameter("bookname");
         if(page==null){
             page=1;
         }
         if(rows==null||rows<0){
             rows= 10;
         }
+        final String bname = bookname;
+        final Integer userid = loginVo.getId();
+        Specification<Book> sc = new Specification<Book>(){
+            @Override
+            public Predicate toPredicate(Root<Book> root,
+                                         CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<String> bookname = root.get("bookname");
+                Path<Integer> createuser = root.get("createuser");
+                query.where(cb.equal(createuser, userid));
+                if(bname!=null&&!bname.equals("")){
+                    query.where(cb.like(bookname, "%"+bname+"%"));
+                }
+                return null;
+            }
+        };
+
         Sort sort = new Sort(Sort.Direction.DESC, "createtime");
         Pageable pageable = new PageRequest(page-1, rows,sort);
-        Page<Book> pages = bookRepository.findByCreateuser(loginVo.getId(),pageable);
+        Page<Book> pages = bookRepository.findAll(sc,pageable);
         List<Book> bookList = pages.getContent();
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
         if(bookList!=null && bookList.size()>0){

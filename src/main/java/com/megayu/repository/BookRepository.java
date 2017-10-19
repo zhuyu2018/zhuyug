@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book,Long> ,JpaSpecificationExecutor {
+public interface BookRepository extends JpaRepository<Book,Long> ,JpaSpecificationExecutor<Book> {
     @Query(value = "select * from y_book where createuser=?1 or publicstatus = 1 limit ?2 ", nativeQuery = true)
     @Modifying
     List<Book> queryBookLimit(Integer userid,int limit);

@@ -365,7 +365,7 @@ tr{
 }
 
 .book-manage{
-    /*background:rgba(255,255,255,0.8);*/
+    background:rgba(255,255,255,0.8);
     width: 100%;
     margin: 0 auto;
     height: 100%;
@@ -378,4 +378,16 @@ tr{
     top:300px;
     height: 100%;
     position: fixed;z-index: 3;
+}
+.query-div{
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;z-index: 3;
+    top:200px;
+}
+.add-book-div{
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;z-index: 3;
+    top:200px;
 }
