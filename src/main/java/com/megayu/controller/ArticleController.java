@@ -132,9 +132,61 @@ public class ArticleController {
     @RequestMapping(value = "/openArticleDetail")
     public String openArticleDetail(HttpServletRequest request , HttpServletResponse response, Model model){
         String bookid = request.getParameter("bookid");
-        String articleid = request.getParameter("articleid");
-
+        String articleid = request.getParameter("articleid");//当前章节id
+        if (articleid==null || articleid.equals("") || articleid.equals("undefined")){
+            return "error";
+        }
+        if (bookid==null || bookid.equals("") || bookid.equals("undefined")){
+            return "error";
+        }
+        Article article = articleRepository.findByIdAndDelstatusAndPublicstatus(Integer.valueOf(articleid),1,1);
+        if (article==null){
+            return "error";
+        }
+        model.addAttribute("prevId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"prev"));
+        model.addAttribute("nextId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"next"));
+        model.addAttribute("articleContent",article.getArticlecontent());
         model.addAttribute("bookid",bookid);
         return "articledetail";
+    }
+
+    public String queryOtherArticleIdByCurrentSort(Integer bookid,Integer sort,String type){
+        String id = "-1";
+        Integer countArticle = 0;
+        if("next".equals(type)){
+            countArticle = articleRepository.findByBookid(bookid).size();
+        }
+        int i = 0;
+        if (sort!=null&&sort>0){
+            boolean flag = true;
+            while (flag){
+                if (i==30){
+                    break;
+                }
+                i = i+1;
+                if("prev".equals(type)){
+                    if (sort<=1){
+                        break;
+                    }
+                    sort = sort-1;
+                    Article article = articleRepository.queryOtherArticle(bookid,sort);
+                    if (article!=null){
+                        id=article.getId().toString();
+                        break;
+                    }
+                }else if ("next".equals(type)){
+                    if (sort>=countArticle){
+                        break;
+                    }
+                    sort = sort+1;
+                    Article article = articleRepository.queryOtherArticle(bookid,sort);
+                    if (article!=null){
+                        id=article.getId().toString();
+                        break;
+                    }
+                }
+            }
+        }
+        return id;
     }
 }

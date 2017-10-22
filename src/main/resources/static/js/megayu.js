@@ -45,14 +45,55 @@ function openBookSubject(page) {
 }
 function numberToChineseNumber(numstr) {
     var numb= ["1","2","3","4","5","6","7","8","9","0"];
-    var chineseNumb = ["一","二","三","四","五","六","七","八","九","十","零"];
-
-    for(var i in numb){
-        if(numstr.indexOf(numb[i])>=0){
-            numstr = numstr.replace()
+    var chineseNumb = ["零","一","二","三","四","五","六","七","八","九","十"];
+    if(numstr.length==1){
+        return chineseNumb[parseInt(numstr)];
+    }else if(numstr.length==2){
+        var numArr = numstr.split("");
+        var lastNum = "";
+        if(numArr[1]!="0"){
+            lastNum =chineseNumb[parseInt(numArr[1])];
+        }
+        return chineseNumb[parseInt(numArr[0])]+"十"+lastNum;
+    }else if (numstr.length==3){
+        var numArr = numstr.split("");
+        var lastNum = "";
+        if(numArr[2]!="0"){
+            lastNum =chineseNumb[parseInt(numArr[2])];
+        }
+        var msg = "";
+        msg = msg + chineseNumb[parseInt(numstr[0])]+"百";
+        if(numArr[1]=="0"&&numArr[2]=="0"){
+            return msg;
+        }else if(numArr[1]=="0"&&numArr[2]!="0"){
+            return msg + chineseNumb[parseInt(numArr[2])];
+        }else if(numArr[1]!="0"&&numArr[2]!="0"){
+            return msg +chineseNumb[parseInt(numArr[1])] + "十" +chineseNumb[parseInt(numArr[2])];
+        }else if(numArr[1]!="0"&&numArr[2]=="0"){
+            return msg +chineseNumb[parseInt(numArr[1])] + "十";
+        }
+    }else if (numstr.length==4){
+        var numArr = numstr.split("");
+        var msg = "";
+        msg = msg + chineseNumb[parseInt(numArr[0])]+"千";
+        if(numArr[1]!="0"&&numArr[2]!="0"&&numArr[3]!="0"){
+            return msg + chineseNumb[parseInt(numArr[1])]+"百"+chineseNumb[parseInt(numArr[2])]+"十"+chineseNumb[parseInt(numArr[3])];
+        }else if (numArr[1]!="0"&&numArr[2]=="0"&&numArr[3]!="0"){
+            return msg + chineseNumb[parseInt(numArr[1])]+"百零"+chineseNumb[parseInt(numArr[3])];
+        }else if (numArr[1]=="0"&&numArr[2]=="0"&&numArr[3]!="0"){
+            return msg + "零"+chineseNumb[parseInt(numArr[3])];
+        }else if (numArr[1]=="0"&&numArr[2]!="0"&&numArr[3]!="0"){
+            return msg + "零"+chineseNumb[parseInt(numArr[2])]+"十"+chineseNumb[parseInt(numArr[3])];
+        }else if(numArr[1]!="0"&&numArr[2]!="0"&&numArr[3]=="0"){
+            return msg + chineseNumb[parseInt(numArr[1])]+"百"+chineseNumb[parseInt(numArr[2])]+"十";
+        }else if (numArr[1]!="0"&&numArr[2]=="0"&&numArr[3]=="0"){
+            return msg + chineseNumb[parseInt(numArr[1])]+"百";
+        }else if (numArr[1]=="0"&&numArr[2]=="0"&&numArr[3]=="0"){
+            return msg;
+        }else if (numArr[1]=="0"&&numArr[2]!="0"&&numArr[3]=="0"){
+            return msg + "零"+chineseNumb[parseInt(numArr[2])]+"十";
         }
     }
-
 }
 //章节阅读
 function openArticleDetail(articleid,bookid) {
