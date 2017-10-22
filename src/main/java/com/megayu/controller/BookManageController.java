@@ -150,7 +150,7 @@ public class BookManageController {
         LoginVo loginVo = LoginUtil.getLoginVo(request);
         Integer page = Integer.valueOf(request.getParameter("page"));
         Integer rows = Integer.valueOf(request.getParameter("rows"));
-        String articlename = request.getParameter("articlename");
+        String atname = request.getParameter("articlename");
         String bkid = request.getParameter("bookid");
         if(page==null){
             page=1;
@@ -158,7 +158,7 @@ public class BookManageController {
         if(rows==null||rows<0){
             rows= 10;
         }
-        final String aname = articlename;
+        final String aname = atname;
         final Integer userid = loginVo.getId();
         final Integer bid = Integer.valueOf(bkid);
         Specification<Article> sc = new Specification<Article>(){
@@ -169,9 +169,7 @@ public class BookManageController {
                 Path<Integer> createuser = root.get("createuser");
                 Path<Integer> delstatus = root.get("delstatus");
                 Path<Integer> bookid = root.get("bookid");
-                query.where(cb.equal(createuser, userid));
-                query.where(cb.equal(bookid, bid));
-                query.where(cb.equal(delstatus, 1));
+                query.where(cb.equal(createuser, userid),cb.equal(bookid, bid),cb.equal(delstatus, 1));
                 if(aname!=null&&!aname.equals("")){
                     query.where(cb.like(articlename, "%"+aname+"%"));
                 }
@@ -192,12 +190,22 @@ public class BookManageController {
                 map.put("authorname",article.getAuthorname());
                 map.put("id",article.getId());
                 map.put("articlesort",article.getArticlesort());
-                map.put("countContent",article.getArticlecontent().length());
-                if (article.getArticlecontent().trim().length()>61){
-                    map.put("articleContent",article.getArticlecontent().trim().substring(0,60)+"...");
+                if (article.getArticlecontent()!=null){
+                    map.put("countContent",article.getArticlecontent().length());
+
                 }else {
-                    map.put("articleContent",article.getArticlecontent().trim());
+                    map.put("countContent",0);
                 }
+                if (article.getArticlecontent()!=null){
+                    if (article.getArticlecontent().trim().length()>61){
+                        map.put("articleContent",article.getArticlecontent().trim().substring(0,60)+"...");
+                    }else {
+                        map.put("articleContent",article.getArticlecontent().trim());
+                    }
+                }else {
+                    map.put("articleContent","");
+                }
+
 
                 if(article.getCreatetime()!=null){
                     map.put("createtime",DateUtil.editDate(article.getCreatetime()));
@@ -218,6 +226,7 @@ public class BookManageController {
         map.put("totalCount",pages.getTotalElements());
         map.put("dataList",resultList);
         map.put("totalpages",pages.getTotalPages());
+        map.put("bookid",bkid);
         return new Gson().toJson(map);
     }
 
@@ -293,6 +302,7 @@ public class BookManageController {
         map.put("totalCount",pages.getTotalElements());
         map.put("dataList",resultList);
         map.put("totalpages",pages.getTotalPages());
+
         return new Gson().toJson(map);
     }
 

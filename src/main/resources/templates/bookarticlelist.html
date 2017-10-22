@@ -36,9 +36,9 @@
     <div class="query-div">
         <div class="form-group">
             <input type="hidden" id="bookid" th:value="${bookid}"/>
-            <label class="col-sm-2 control-label" style="float: left;margin-right: 10px;margin-top: 5px;color: #3baae3;font-size: large;margin-left: 350px;" for="bookname">章名：</label>
+            <label class="col-sm-2 control-label" style="float: left;margin-right: 10px;margin-top: 5px;color: #3baae3;font-size: large;margin-left: 350px;" for="articlename">章名：</label>
             <div class="col-sm-4">
-                <input class="form-control" id="bookname" style="float: left;margin-right: 10px;" type="text" placeholder="请输入章名"/>
+                <input class="form-control" id="articlename" style="float: left;margin-right: 10px;" type="text" placeholder="请输入章名"/>
             </div>
             <button  class="btn btn-info" style="width: 60px;height: 30px;float: left;margin-right: 14px;" id="searchButton">检索</button>
             <button  class="btn btn-success" style="width: 60px;height: 30px;float: right;margin-right: 1px;margin-top: 69px" id="addBook">新章</button>
@@ -123,11 +123,11 @@
         }
     }
     $("#searchButton").click(function(){
-        var bookname = $("#bookname").val();
+        var articlename = $("#articlename").val();
         var bookid = $("#bookid").val();
 //        alert(bookname);
 //        var searchQuestionValue = encodeURIComponent($("#searchQuestion").val());
-        var postJson = {bookname:bookname,bookid:bookid};
+        var postJson = {articlename:articlename,bookid:bookid};
 
         //传入查询条件参数
         $("#bookTable").jqGrid("setGridParam",{postData:postJson});
