@@ -85,7 +85,7 @@
                     if(yushu==1){
                         $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a" onclick="openArticleDetail(\''+articleid+'\',\''+bookid+'\',\''+zhangxu+'\');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
                     }else{
-                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td>');
+                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" onclick="openArticleDetail(\''+articleid+'\',\''+bookid+'\',\''+zhangxu+'\');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td>');
 
                     }
 

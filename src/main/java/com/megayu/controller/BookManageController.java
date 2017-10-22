@@ -37,10 +37,43 @@ public class BookManageController {
 
         return "booklist";
     }
+
+    @RequestMapping(value = "/openBookArticleManage")
+    public String openBookArticleManage(HttpServletRequest request , HttpServletResponse response, Model model){
+        String bookid = request.getParameter("bookid");
+        model.addAttribute("bookid",bookid);
+        return "bookarticlelist";
+    }
+
     @RequestMapping(value = "/openAddBook")
     public String openAddBook(HttpServletRequest request , HttpServletResponse response, Model model){
         return "addbook";
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/delBookArticle")
+    public String delBookArticle(HttpServletRequest request , HttpServletResponse response, Model model){
+        try {
+            LoginVo loginVo = LoginUtil.getLoginVo(request);
+            String id=request.getParameter("id");
+            Integer idI = Integer.valueOf(id);
+            Article article = articleRepository.findByIdAndDelstatus(idI,1);
+            if(article==null){
+                return "章节不存在";
+            }
+            if(article.getAuthor()!=null&&article.getAuthor().equals(loginVo.getId())){//是作者自己才能删除
+                article.setDelstatus(0);
+                articleRepository.save(article);
+                return "success";
+            }else{
+                return "作者与操作人不一致，不允许删除";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
     @ResponseBody
     @RequestMapping(value = "/delBook")
     public String delBook(HttpServletRequest request , HttpServletResponse response, Model model){
@@ -109,6 +142,83 @@ public class BookManageController {
 
 
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/queryBookArticlePage")
+    public String queryBookArticlePage(HttpServletRequest request , HttpServletResponse response, Model model){
+        LoginVo loginVo = LoginUtil.getLoginVo(request);
+        Integer page = Integer.valueOf(request.getParameter("page"));
+        Integer rows = Integer.valueOf(request.getParameter("rows"));
+        String articlename = request.getParameter("articlename");
+        String bkid = request.getParameter("bookid");
+        if(page==null){
+            page=1;
+        }
+        if(rows==null||rows<0){
+            rows= 10;
+        }
+        final String aname = articlename;
+        final Integer userid = loginVo.getId();
+        final Integer bid = Integer.valueOf(bkid);
+        Specification<Article> sc = new Specification<Article>(){
+            @Override
+            public Predicate toPredicate(Root<Article> root,
+                                         CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<String> articlename = root.get("articlename");
+                Path<Integer> createuser = root.get("createuser");
+                Path<Integer> delstatus = root.get("delstatus");
+                Path<Integer> bookid = root.get("bookid");
+                query.where(cb.equal(createuser, userid));
+                query.where(cb.equal(bookid, bid));
+                query.where(cb.equal(delstatus, 1));
+                if(aname!=null&&!aname.equals("")){
+                    query.where(cb.like(articlename, "%"+aname+"%"));
+                }
+                return null;
+            }
+        };
+
+        Sort sort = new Sort(Sort.Direction.DESC, "createtime");
+        Pageable pageable = new PageRequest(page-1, rows,sort);
+        Page<Article> pages = articleRepository.findAll(sc,pageable);
+        List<Article> articleList = pages.getContent();
+        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+        if(articleList!=null && articleList.size()>0){
+            for (Article article : articleList){
+                Map<String,Object> map = new HashMap<String,Object>();
+                map.put("articlename",article.getArticlename());
+//                map.put("remark",book.getRemark());
+                map.put("authorname",article.getAuthorname());
+                map.put("id",article.getId());
+                map.put("articlesort",article.getArticlesort());
+                map.put("countContent",article.getArticlecontent().length());
+                if (article.getArticlecontent().trim().length()>61){
+                    map.put("articleContent",article.getArticlecontent().trim().substring(0,60)+"...");
+                }else {
+                    map.put("articleContent",article.getArticlecontent().trim());
+                }
+
+                if(article.getCreatetime()!=null){
+                    map.put("createtime",DateUtil.editDate(article.getCreatetime()));
+                }
+                if(article.getPublicstatus()!=null){
+                    if(article.getPublicstatus()==1){
+                        map.put("publicmsg","是");
+                    }else{
+                        map.put("publicmsg","否");
+                    }
+                }
+                resultList.add(map);
+            }
+        }
+        Map map = new HashMap();
+        map.put("page",page);
+        map.put("rows",rows);
+        map.put("totalCount",pages.getTotalElements());
+        map.put("dataList",resultList);
+        map.put("totalpages",pages.getTotalPages());
+        return new Gson().toJson(map);
     }
 
     @ResponseBody

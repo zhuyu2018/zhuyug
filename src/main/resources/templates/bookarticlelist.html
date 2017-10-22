@@ -13,7 +13,7 @@
 
     <!--<style>.ui-jqgrid tr.jqgrow{height:30px}</style>-->
 
-    <title>觅语-书籍管理</title>
+    <title>觅语-章节管理</title>
 </head>
 <body style="text-align:center;width:100%;height: 100%">
 <div th:include="top :: html"></div>
@@ -35,13 +35,13 @@
 <div class="book-manage">
     <div class="query-div">
         <div class="form-group">
-
-            <label class="col-sm-2 control-label" style="float: left;margin-right: 10px;margin-top: 5px;color: #3baae3;font-size: large;margin-left: 350px;" for="bookname">书名：</label>
+            <input type="hidden" id="bookid" th:value="${bookid}"/>
+            <label class="col-sm-2 control-label" style="float: left;margin-right: 10px;margin-top: 5px;color: #3baae3;font-size: large;margin-left: 350px;" for="bookname">章名：</label>
             <div class="col-sm-4">
-                <input class="form-control" id="bookname" style="float: left;margin-right: 10px;" type="text" placeholder="请输入书名"/>
+                <input class="form-control" id="bookname" style="float: left;margin-right: 10px;" type="text" placeholder="请输入章名"/>
             </div>
             <button  class="btn btn-info" style="width: 60px;height: 30px;float: left;margin-right: 14px;" id="searchButton">检索</button>
-            <button  class="btn btn-success" style="width: 60px;height: 30px;float: right;margin-right: 1px;margin-top: 69px" id="addBook">新书</button>
+            <button  class="btn btn-success" style="width: 60px;height: 30px;float: right;margin-right: 1px;margin-top: 69px" id="addBook">新章</button>
     </div>
 
         <!--<label class="col-sm-2 control-label" for="ds_name">数据库名</label>-->
@@ -88,9 +88,7 @@
         self.location.href="/login/bookManage/newBookArticle?bookid="+booid;
     }
 
-    function openBookArticleManage(bookid) {
-        self.location.href="/login/bookManage/openBookArticleManage?bookid="+bookid;
-    }
+
 
     $(function(){
         //页面加载完成之后执行
@@ -103,13 +101,14 @@
         $(".book-manage-div").css("left",(parseInt(shuyeleftwidth)-1000)+"px");
     })
     $("#addBook").click(function () {
-        location.href="/login/bookManage/openAddBook";
+        var booid = $("#bookid").val();
+        newBookArticle(booid);
     })
-    function delBook(id){
+    function delBookArticle(id){
         if(id!=null){
             if(id!=""){
                 if(confirm("确定删除？")){
-                    $.post("/login/bookManage/delBook",{id:id},function (result) {
+                    $.post("/login/bookManage/delBookArticle",{id:id},function (result) {
                         if(result!=null){
                             if(result=="success"){
                                 alert("删除成功");
@@ -125,34 +124,36 @@
     }
     $("#searchButton").click(function(){
         var bookname = $("#bookname").val();
+        var bookid = $("#bookid").val();
 //        alert(bookname);
 //        var searchQuestionValue = encodeURIComponent($("#searchQuestion").val());
-        var postJson = {bookname:bookname};
+        var postJson = {bookname:bookname,bookid:bookid};
 
         //传入查询条件参数
         $("#bookTable").jqGrid("setGridParam",{postData:postJson});
         //每次提出新的查询都转到第一页
         $("#bookTable").jqGrid("setGridParam",{page:1});
         //提交post并刷新表格
-        $("#bookTable").jqGrid("setGridParam",{url:"/login/bookManage/queryBookPage"}).trigger("reloadGrid");
+        $("#bookTable").jqGrid("setGridParam",{url:"/login/bookManage/queryBookArticlePage"}).trigger("reloadGrid");
     });
 
     function pageInit(){
+        var bookid = $("#bookid").val();
         //创建jqGrid组件
         $("#bookTable").jqGrid(
             {
-                url : '/login/bookManage/queryBookPage',//组件创建完成之后请求数据的url
-                postData : {},
+                url : '/login/bookManage/queryBookArticlePage',//组件创建完成之后请求数据的url
+                postData : {bookid:bookid},
                 rownumbers: true,
                 styleUI: 'Bootstrap',
                 datatype : "json",//请求数据返回的类型。可选json,xml,txt
-                colNames : [ 'id', '书名','简介','章数','最新章节','作者','公开','创建时间', '修改时间','操作'],//jqGrid的列显示名字
+                colNames : [ 'id', '章序','章名','内容','字数','作者','公开','创建时间', '修改时间','操作'],//jqGrid的列显示名字
                 colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
                     {name : 'id',index : 'id',width : 55,hidden:true},
-                    {name : 'bookname',index : 'bookname',width : 90},
-                    {name : 'remark',index : 'remark',width : 410},
-                    {name : 'articleCount',index : 'articleCount',width : 40},
-                    {name : 'newArticleName',index : 'newArticleName',width : 90},
+                    {name : 'articlesort',index : 'articlesort',width : 90},
+                    {name : 'articlename',index : 'articlename',width : 90},
+                    {name : 'articleContent',index : 'articleContent',width : 410},
+                    {name : 'countContent',index : 'countContent',width : 40},
                     {name : 'authorname',index : 'authorname',width : 50},
                     {name : 'publicmsg',index : 'publicmsg',width : 50},
 //                    { name: 'publicstatus', index: 'publicstatus', width:50, align: "center", sortable: false, editable: false, formatter: function (cellvalue, options, rowdata) {
@@ -165,7 +166,7 @@
                     {name : 'createtime',index : 'createtime',width : 90},
                     {name : 'updatetime',index : 'updatetime',width : 90},
                     { name: 'edit', index: 'edit', width: 90, align: "center", sortable: false, editable: false, formatter: function (cellvalue, options, rowdata) {
-                        return '<a style="cursor: pointer;">修改</a>&nbsp;<a style="cursor: pointer;color: #dd514c" onclick="delBook(\''+rowdata.id+'\');">删除</a>&nbsp;<a onclick="openBookArticleManage(\''+rowdata.id+'\');" style="cursor: pointer;color: #51a351">章节</a>';
+                        return '<a style="cursor: pointer;">修改</a>&nbsp;<a style="cursor: pointer;color: #dd514c" onclick="delBookArticle(\''+rowdata.id+'\');">删除</a>';
                      }}
                 ],
 

@@ -111,9 +111,9 @@ public class ArticleController {
         Page<Article> pages = null;
         if(bookid!=null && !"".equals(bookid)){
             Integer bid = Integer.valueOf(bookid);
-            Sort sort = new Sort(Sort.Direction.DESC, "createtime");
+            Sort sort = new Sort(Sort.Direction.ASC, "articlesort");
             Pageable pageable = new PageRequest(pagei, sizei,sort);
-            pages = articleRepository.findByBookidOrderByArticlesortAsc(bid,pageable);
+            pages = articleRepository.findByBookid(bid,pageable);
         }
         List<Article> articleList = pages.getContent();
         return new Gson().toJson(articleList);
@@ -126,7 +126,7 @@ public class ArticleController {
         if(bookid!=null && !"".equals(bookid) &&!"undefined".equals(bookid)){
             bid = Integer.valueOf(bookid);
         }
-        List<Article> articleList = articleRepository.findByBookid(bid);
+        List<Article> articleList = articleRepository.findByBookidOrderByArticlesortAsc(bid);
         return new Gson().toJson(articleList);
     }
     @RequestMapping(value = "/openArticleDetail")
