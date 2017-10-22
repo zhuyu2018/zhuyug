@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" style="width:100%;height: 100%">
+<head>
+    <meta charset="UTF-8"/>
+
+    <!-- jqGrid组件基础样式包-必要 -->
+    <link rel="stylesheet" href="/css/ui.jqgrid.css" />
+
+    <!-- jqGrid主题包-非必要 -->
+    <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
+    <link rel="stylesheet" href="/css/redmond/jquery-ui-1.8.16.custom.css" />
+
+
+
+    <title>觅语-文章</title>
+</head>
+<body style="text-align:center;width:100%;height: 100%">
+<div th:include="top :: html"></div>
+
+<div>
+    <input type="hidden" id="bookid" th:value="${bookid}"/>
+    <input type="hidden" id="bookname" th:value="${bookname}"/>
+</div>
+<!--<div>
+    <table id="articleTable"></table>
+    <div id="articleTablePage"></div>
+</div>-->
+<div class="book">
+    <br/>
+    <br/>
+    <div class="title-div">
+        <span style="font-size: 30px;color: #303030;font-family: serif;" th:text="${bookname}"></span>
+        <span style="font-size: 13px;color: #303030;margin-left: 20px">作者：<span style="font-weight: 600" th:text="${authorname}"></span></span>
+
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <span style="font-weight: 600;position: absolute;top: 147px;left: 478px;font-size: 15px;">正文</span>
+    <br/>
+    <div class="shadow_div" ></div>
+    <br/>
+    <div class="book-div">
+        <table class="book-div-table">
+
+
+
+        </table>
+    </div>
+
+</div>
+
+</body>
+
+<!-- jquery插件包-必要 -->
+<!-- 这个是所有jquery插件的基础，首先第一个引入 -->
+<script type="text/javascript" src="/js/jquery-1.7.1.js"></script>
+
+<!-- jqGrid插件包-必要 -->
+<script type="text/javascript" src="/js/jquery.jqGrid.src.js"></script>
+
+<!-- jqGrid插件的多语言包-非必要 -->
+<!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
+<script type="text/javascript" src="/js/grid.locale-cn.js"></script>
+
+<script>
+    $(function(){
+        //页面加载完成之后执行
+        // pageInit();
+        initArticleDetail();
+    });
+    function initArticleDetail() {
+        var bookid = $("#bookid").val();
+        $.post("/login/article/queryArticleList",{bookid : bookid},function (result) {
+            if(result!=null){
+                var articles =eval(result);
+                for(var i in articles){
+                    var articlename = articles[i].articlename;
+                    var xuhao = parseInt(i)+1;
+                    var yushu = parseInt(xuhao)%3;
+                    var zhangxu = "第"+xuhao+"章   ";
+                    if(yushu==1){
+                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
+                    }else{
+                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td>');
+
+                    }
+
+                }
+            }
+        },"json");
+
+    }
+
+
+
+
+
+
+</script>
+
+
+
+</html>

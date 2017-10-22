@@ -129,4 +129,12 @@ public class ArticleController {
         List<Article> articleList = articleRepository.findByBookid(bid);
         return new Gson().toJson(articleList);
     }
+    @RequestMapping(value = "/openArticleDetail")
+    public String openArticleDetail(HttpServletRequest request , HttpServletResponse response, Model model){
+        String bookid = request.getParameter("bookid");
+        String articleid = request.getParameter("articleid");
+
+        model.addAttribute("bookid",bookid);
+        return "articledetail";
+    }
 }

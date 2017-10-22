@@ -43,4 +43,18 @@ function openBookSubject(page) {
         self.location.href="/login/book/openBookSubject?page="+page;
     }
 }
+function numberToChineseNumber(numstr) {
+    var numb= ["1","2","3","4","5","6","7","8","9","0"];
+    var chineseNumb = ["一","二","三","四","五","六","七","八","九","十","零"];
 
+    for(var i in numb){
+        if(numstr.indexOf(numb[i])>=0){
+            numstr = numstr.replace()
+        }
+    }
+
+}
+//章节阅读
+function openArticleDetail(articleid,bookid) {
+    self.location.href="/login/article/openArticleDetail?articleid="+articleid+"&bookid="+bookid;
+}
