@@ -26,9 +26,28 @@ public class Article {
     private String        authorname;
     private Integer publicstatus;
 
+    private Integer articlesort;
+
+    private Integer delstatus;
+
+    public Integer getDelstatus() {
+        return delstatus;
+    }
+
+    public void setDelstatus(Integer delstatus) {
+        this.delstatus = delstatus;
+    }
 
     private String time1;
     private String time2;
+
+    public Integer getArticlesort() {
+        return articlesort;
+    }
+
+    public void setArticlesort(Integer articlesort) {
+        this.articlesort = articlesort;
+    }
 
     public String getTime1() {
         return time1;

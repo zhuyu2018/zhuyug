@@ -21,6 +21,16 @@ public class Book {
     private Integer edituser;
     private Integer publicstatus;
 
+    private Integer delstatus;
+
+    public Integer getDelstatus() {
+        return delstatus;
+    }
+
+    public void setDelstatus(Integer delstatus) {
+        this.delstatus = delstatus;
+    }
+
     private String time1;
     private String time2;
 

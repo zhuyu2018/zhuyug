@@ -26,10 +26,20 @@
         <div id="articleTablePage"></div>
     </div>-->
     <div class="book">
+        <br/>
+        <br/>
         <div class="title-div">
-            <span th:text="${bookname}"></span>
-        </div>
+            <span style="font-size: 30px;color: #303030;font-family: serif;" th:text="${bookname}"></span>
+            <span style="font-size: 13px;color: #303030;margin-left: 20px">作者：<span style="font-weight: 600" th:text="${authorname}"></span></span>
 
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <span style="font-weight: 600;position: absolute;top: 147px;left: 478px;font-size: 15px;">正文</span>
+        <br/>
+        <div class="shadow_div" ></div>
+        <br/>
         <div class="book-div">
             <table class="book-div-table">
 
@@ -70,9 +80,9 @@
                     var yushu = parseInt(xuhao)%3;
                     var zhangxu = "第"+xuhao+"章   ";
                     if(yushu==1){
-                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a">'+zhangxu+articlename+'</a></td></tr>');
+                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
                     }else{
-                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >'+zhangxu+articlename+'</a></td>');
+                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td>');
 
                     }
 

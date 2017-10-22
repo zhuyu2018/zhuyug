@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article,Long> ,JpaSpecificationExecutor {
-    @Query(value = "select * from y_article where (createuser=?1 or publicstatus = 1) and articletype=?2 limit ?3 ", nativeQuery = true)
+    @Query(value = "select * from y_article where (createuser=?1 or publicstatus = 1) and delstatus = 1 and articletype=?2 limit ?3 ", nativeQuery = true)
     @Modifying
     List<Article> queryArticleLimit(Integer userid,int type, int limit);
 
@@ -23,5 +23,5 @@ public interface ArticleRepository extends JpaRepository<Article,Long> ,JpaSpeci
     @Modifying
     List<Article> findByBookid(Integer bookid);
 
-
+    Article findByArticlesortAndDelstatusAndBookid(Integer sort,Integer delstatus,Integer bookid);
 }

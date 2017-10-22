@@ -36,5 +36,11 @@ function compare(a,b,c) {
 }
 
 function openBookSubject(page) {
-    self.location.href="/login/book/openBookSubject?page="+page;
+    var bigbookname = $("#bigsearchbookname").val();
+    if(bigbookname!=null && bigbookname!=""&&bigbookname!=undefined){
+        self.location.href="/login/book/openBookSubject?page="+page+"&bookname="+bigbookname;
+    }else{
+        self.location.href="/login/book/openBookSubject?page="+page;
+    }
 }
+

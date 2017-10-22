@@ -71,6 +71,25 @@
 <script type="text/javascript" src="/js/grid.locale-cn.js"></script>
 
 <script>
+    //新增章节
+    function newBookArticle(booid) {
+        if(booid==null){
+            alert("错误");
+            return ;
+        }
+        if(booid==""){
+            alert("错误");
+            return ;
+        }
+        if(booid==undefined){
+            alert("错误");
+            return ;
+        }
+        self.location.href="/login/bookManage/newBookArticle?bookid="+booid;
+    }
+
+
+
     $(function(){
         //页面加载完成之后执行
          pageInit();
@@ -84,6 +103,24 @@
     $("#addBook").click(function () {
         location.href="/login/bookManage/openAddBook";
     })
+    function delBook(id){
+        if(id!=null){
+            if(id!=""){
+                if(confirm("确定删除？")){
+                    $.post("/login/bookManage/delBook",{id:id},function (result) {
+                        if(result!=null){
+                            if(result=="success"){
+                                alert("删除成功");
+                                $("#searchButton").click();
+                            }else{
+                                alert(result);
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
     $("#searchButton").click(function(){
         var bookname = $("#bookname").val();
 //        alert(bookname);
@@ -107,18 +144,26 @@
                 rownumbers: true,
                 styleUI: 'Bootstrap',
                 datatype : "json",//请求数据返回的类型。可选json,xml,txt
-                colNames : [  '书名','简介','章数','最新章节','作者','创建时间', '修改时间','操作'],//jqGrid的列显示名字
+                colNames : [ 'id', '书名','简介','章数','最新章节','作者','公开','创建时间', '修改时间','操作'],//jqGrid的列显示名字
                 colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
-//                    {name : 'id',index : 'id',width : 55,hide:true},
+                    {name : 'id',index : 'id',width : 55,hidden:true},
                     {name : 'bookname',index : 'bookname',width : 90},
                     {name : 'remark',index : 'remark',width : 410},
                     {name : 'articleCount',index : 'articleCount',width : 40},
                     {name : 'newArticleName',index : 'newArticleName',width : 90},
                     {name : 'authorname',index : 'authorname',width : 50},
+                    {name : 'publicmsg',index : 'publicmsg',width : 50},
+//                    { name: 'publicstatus', index: 'publicstatus', width:50, align: "center", sortable: false, editable: false, formatter: function (cellvalue, options, rowdata) {
+//                        if(cellvalue==1){
+//                            return "是";
+//                        }else{
+//                            return cellvalue;
+//                        }
+//                    }},
                     {name : 'createtime',index : 'createtime',width : 90},
                     {name : 'updatetime',index : 'updatetime',width : 90},
                     { name: 'edit', index: 'edit', width: 90, align: "center", sortable: false, editable: false, formatter: function (cellvalue, options, rowdata) {
-                        return '<a style="cursor: pointer;">修改</a>&nbsp;<a style="cursor: pointer;color: #dd514c">删除</a>&nbsp;<a style="cursor: pointer;color: #51a351">新章</a>';
+                        return '<a style="cursor: pointer;">修改</a>&nbsp;<a style="cursor: pointer;color: #dd514c" onclick="delBook(\''+rowdata.id+'\');">删除</a>&nbsp;<a onclick="newBookArticle(\''+rowdata.id+'\');" style="cursor: pointer;color: #51a351">新章</a>';
                      }}
                 ],
 
@@ -129,6 +174,7 @@
                 sortorder : "desc",//排序方式,可选desc,asc
                 mtype : "post",//向后台请求数据的ajax的类型。可选post,get
                 autowidth: true,
+
                 jsonReader: {
                     //   很重要 定义了 后台分页参数的名字。
                     root:"dataList",
@@ -137,7 +183,9 @@
                     repeatitems : false
                 },
                 shrinkToFit: true,
-                height: '260',
+                height: '460',
+//                autoheight:true,
+
                 viewrecords : true
 //                caption : bookname//表格的标题名字
 

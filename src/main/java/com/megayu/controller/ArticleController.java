@@ -35,12 +35,10 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/login/article")
 public class ArticleController {
-
     @Autowired
     BookRepository bookRepository;
     @Autowired
     ArticleRepository articleRepository;
-
     @ResponseBody
     @RequestMapping(value = "/queryArticle")
     public String queryArticle(HttpServletRequest request , HttpServletResponse response, Model model){
@@ -49,7 +47,6 @@ public class ArticleController {
         Gson gson = new Gson();
         return gson.toJson(articles);
     }
-
     @ResponseBody
     @RequestMapping(value = "/queryMiyu")
     public String queryMiyu(HttpServletRequest request , HttpServletResponse response, Model model){
@@ -58,76 +55,24 @@ public class ArticleController {
         Gson gson = new Gson();
         return gson.toJson(articles);
     }
-
     @ResponseBody
     @RequestMapping(value = "/queryBook")
     public String queryBook(HttpServletRequest request , HttpServletResponse response, Model model){
         LoginVo loginVo = LoginUtil.getLoginVo(request);
         List<Book> books = queryBook(loginVo.getId());
-//        List<Article> articles = queryArticle(2,loginVo.getId());
         Gson gson = new Gson();
         return gson.toJson(books);
     }
-
     public List<Book> queryBook(final Integer userid){
-//        List<Book> books = bookRepository.findAll(new Specification<Book>() {
-//            @Override
-//            public Predicate toPredicate(Root<Book> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-//                List<Predicate> list = new ArrayList<Predicate>();
-//
-//                if (userid>0) {
-//                    list.add(cb.equal(root.get("createuser").as(Integer.class), userid));
-//                }
-//
-//                Predicate[] p = new Predicate[list.size()];
-//                return cb.and(list.toArray(p));
-//            }
-//
-//        });
-
-//        return books;
         List<Book> books = bookRepository.queryBookLimit(userid,10);
         if(books!=null && books.size()>0){
             for(Book book:books){
                 book.setTime1(DateUtil.editDate(book.getCreatetime()));
             }
         }
-
         return books;
     }
-
-//    public String editDate(Date date){
-//        String yearstr = new SimpleDateFormat("yyyy").format(date);
-//        String createtimestr = new SimpleDateFormat("MM月dd日 HH:mm").format(date);
-//        Calendar now = Calendar.getInstance();
-//        int year =  now.get(Calendar.YEAR);
-//        if(year!=Integer.valueOf(yearstr)){
-//            //不是今年
-//            createtimestr = yearstr+"年"+createtimestr;
-//        }
-//        return createtimestr;
-//    }
-
     public List<Article> queryArticle(final Integer type, final Integer userid){
-//        List<Article> articleList = articleRepository.findAll(new Specification<Article>() {
-//            @Override
-//            public Predicate toPredicate(Root<Article> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-//                List<Predicate> list = new ArrayList<Predicate>();
-//
-//                if (type>0) {
-//                    list.add(cb.equal(root.get("articletype").as(Integer.class), type));
-//                }
-//
-//                if (userid>0) {
-//                    list.add(cb.equal(root.get("createuser").as(Integer.class), userid));
-//                }
-//
-//                Predicate[] p = new Predicate[list.size()];
-//                return cb.and(list.toArray(p));
-//            }
-//
-//        });
-//        return articleList;
         List<Article> articles = articleRepository.queryArticleLimit(userid,type,10);
         if(articles!=null && articles.size()>0){
             for(Article article : articles){
@@ -136,22 +81,21 @@ public class ArticleController {
         }
         return articles;
     }
-
     @RequestMapping(value = "/openBook")
     public String openBook(HttpServletRequest request , HttpServletResponse response, Model model){
         String bookid = request.getParameter("bookid");
         String bookname = request.getParameter("bookname");
+        Book book = bookRepository.findByIdAndDelstatus(Integer.valueOf(bookid),1);
         model.addAttribute("bookid",bookid);
         model.addAttribute("bookname",bookname);
+        model.addAttribute("authorname",book.getAuthorname());
         return "article";
     }
     @ResponseBody
     @RequestMapping(value = "/queryArticlePage")
     public String queryArticlePage(HttpServletRequest request , HttpServletResponse response, Model model){
-        LoginVo loginVo = LoginUtil.getLoginVo(request);
         String page = request.getParameter("page");
         String size = request.getParameter("rows");
-
         int pagei = 0;
         int sizei = 100;
         if(page!=null && !"".equals(page)){
@@ -160,11 +104,9 @@ public class ArticleController {
         if(size!=null && !"".equals(size)){
             sizei = Integer.valueOf(size);
         }
-
         if(pagei>0){
             pagei--;
         }
-
         String bookid = request.getParameter("bookid");
         Page<Article> pages = null;
         if(bookid!=null && !"".equals(bookid)){
@@ -176,20 +118,15 @@ public class ArticleController {
         List<Article> articleList = pages.getContent();
         return new Gson().toJson(articleList);
     }
-
-
     @ResponseBody
     @RequestMapping(value = "/queryArticleList")
     public String queryArticleList(HttpServletRequest request , HttpServletResponse response, Model model){
         String bookid = request.getParameter("bookid");
         Integer bid = 0;
-        if(bookid!=null && !"".equals(bookid)){
+        if(bookid!=null && !"".equals(bookid) &&!"undefined".equals(bookid)){
             bid = Integer.valueOf(bookid);
         }
         List<Article> articleList = articleRepository.findByBookid(bid);
         return new Gson().toJson(articleList);
     }
-
-
-
 }

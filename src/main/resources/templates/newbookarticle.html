@@ -5,13 +5,15 @@
 
 
     <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/css/wangEditor.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/myediter.css"/>
     <style>
         #div1{
             width: 55px;
             height: 30px;
             border-radius: 50px;
             position: relative;
-            margin-left: 187px;
+            margin-left: 65px;
             margin-top: 30px;
         }
         #div2{
@@ -42,7 +44,9 @@
 
     </style>
 
-    <title>觅语-新增书籍</title>
+
+
+    <title>觅语-新增章节</title>
 </head>
 <body style="text-align:center;width:100%;height: 100%">
 <div th:include="top :: html"></div>
@@ -50,7 +54,13 @@
 
 
 <div class="book-manage">
-    <div class="add-book-div">
+
+    <div class="add-newarticle-div">
+        <span style="font-size: larger;font-weight: 600;">新增章节</span>
+        <input type="hidden" id="bookid" th:value="${bookid}"/>
+        <br/>
+        <br/>
+        <br/>
         <div class="form-group">
             <!--float: left;margin-right: 10px;margin-top: 5px;color: #3baae3;font-size: large;margin-left: 350px;-->
             <!--float: left;margin-right: 10px;-->
@@ -58,25 +68,41 @@
             <!--float: left;margin-right: 10px;-->
             <!--width: 60px;height: 30px;float: right;margin-right: 1px;margin-top: 69px-->
             <!--<label class="col-sm-2 control-label" style="" >书名：</label>-->
+            <span style="color: #3baae3;font-size: medium;font-weight: 600;margin-left: -474px;top: 63px;position: absolute;">章节名称:</span>
             <div class="col-sm-4">
 
-                <span style="color: #3baae3;font-size: large;font-weight: 600">书名：</span> <input class="form-control" id="bookname" style="width: 600px;" type="text" placeholder="请输入书名"/>
+                <input class="form-control" id="articlename" style="width: 400px;margin-left: -385px;" type="text" placeholder="请输入章节名称"/>
+            </div>
+            <br/>
+            <span style="color: #3baae3;font-size: medium;font-weight: 600;margin-left: -474px;top: 123px;position: absolute;">章节序号: </span>
+            <div class="col-sm-4">
+
+                 <input class="form-control" id="articlesort" style="width: 100px;margin-left: -685px;" th:value="${countArticle}" type="text" placeholder="请输入章节序号"/>
             </div>
             <br/>
             <!--<label class="col-sm-2 control-label" style="color: #3baae3;font-size: large;" >简介：</label>-->
+            <span style="color: #3baae3;font-size: medium;font-weight: 600;margin-left: -474px;top: 183px;position: absolute;">章节内容: </span>
             <div class="col-sm-4">
-                <span style="color: #3baae3;font-size: large;font-weight: 600">简介：</span> <textarea class="form-control" id="remark" style="width: 600px;height: 200px;" type="text" placeholder="内容简介"/>
+
+                <!--<div class="editer_div">-->
+
+                <!--<div id="editerDiv" style="height: 500px;max-height:500px;">-->
+                    <!--<p>请输入内容...</p>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <textarea style="height: 500px;margin-left: 16px;width: 800px;" id="articlecontent"></textarea>
             </div>
             <div style="width: 300px;height: 50px">
                 <div class="col-sm-4">
-                    <span style="color: #3baae3;font-size: large;font-weight: 600;float: left;margin-left: 128px;margin-top: 3px;">公开：</span>
+                    <span style="color: #3baae3;font-size: medium;font-weight: 600;float: left;margin-left: -16px;margin-top: 3px;">章节公开：</span>
                     <div id="div1" class="open1">
                         <div id="div2" class="open2"></div>
                     </div>
                 </div>
             </div>
 
-            <button  class="btn btn-success" style="float: right;margin-right: 128px;margin-top: 60px;" id="addBook">提交</button>
+            <button  class="btn btn-success" style="float: right;margin-right: 63px;margin-top: 15px;" id="addBookArticle">提交</button>
         </div>
 
     </div>
@@ -84,15 +110,65 @@
 
 </div>
 
+
+
+
+<script type="text/javascript" src="/js/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="/js/wangEditor.js"></script>
+
+<!--这里引用jquery和wangEditor.js-->
+<script type="text/javascript">
+//    // 获取元素
+//    var div = document.getElementById('editerDiv');
+//    // 生成编辑器
+//    var editor = new wangEditor(div);
+//
+//    editor.create();
+//    $(".w-e-text-container").css("height","500px");
+</script>
 </body>
 
 <!-- jquery插件包-必要 -->
 <!-- 这个是所有jquery插件的基础，首先第一个引入 -->
-<script type="text/javascript" src="/js/jquery-1.7.1.js"></script>
-
-
 
 <script>
+    $("#addBookArticle").click(function () {
+        var bookid = $("#bookid").val();
+        var articlename = $("#articlename").val();
+        var articlesort = $("#articlesort").val();
+        var articlecontent = $("#articlecontent").val();
+        if(articlename==null || articlename=="" || articlename==undefined || articlename.indexOf(" ")>=0){
+            alert("请输入书名，且不要包含空格");
+            return;
+        }
+        var reg = /\D/g;
+        if(reg.test(articlesort)){
+            alert("章节序号只能输入数字");
+            return;
+        }
+
+        if(articlecontent==null || articlecontent=="" || articlecontent==undefined || articlecontent.indexOf(" ")>=0){
+            alert("请输入内容，且不要包含空格");
+            return;
+        }
+
+        var public = $("#div2").attr("class");
+        var publicstatus = "";
+        if(public=="open2"){
+            publicstatus = "1";
+        }else{
+            publicstatus = "2";
+        }
+        $.post("/login/bookManage/saveBookArticle",{bookid:bookid,articlename:articlename,articlesort:articlesort,articlecontent:articlecontent,publicstatus:publicstatus},function (result) {
+            if(result!="success"){
+                alert(result);
+            }else{
+                alert("新增成功");
+                goParent();
+            }
+        })
+    })
+
 
     window.onload=function(){
         var div2=document.getElementById("div2");
@@ -104,7 +180,6 @@
     }
 
     $(function(){
-        //页面加载完成之后执行
 
     });
 
