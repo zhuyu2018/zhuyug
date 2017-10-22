@@ -29,26 +29,28 @@
     <br/>
     <br/>
     <div class="title-div">
-        <span style="font-size: 30px;color: #303030;font-family: serif;" th:text="${bookname}"></span>
+        <span style="font-size: 30px;color: #303030;font-family: serif;" th:text="${zhangxu}"></span>
+        <span style="font-size: 30px;color: #303030;font-family: serif;" th:text="${articlename}"></span>
+        <br/>
+        <br/>
+        <span style="font-size: 16px;font-weight:600;" th:text="${bookname}"></span>
         <span style="font-size: 13px;color: #303030;margin-left: 20px">作者：<span style="font-weight: 600" th:text="${authorname}"></span></span>
-
+        <br/>
+        <span style="font-size: 13px;color: #777777;margin-left: 20px">更新时间：<span style="color: #303030;" th:text="${updatetime}"></span></span>
+        <span style="font-size: 13px;color: #777777;margin-left: 20px">字数：<span style="color: #303030;" th:text="${contentLength}"></span></span>
     </div>
     <br/>
-    <br/>
-    <br/>
-    <span style="font-weight: 600;position: absolute;top: 147px;left: 478px;font-size: 15px;">正文</span>
+    <span style="font-weight: 600;position: absolute;top: 172px;left: 478px;font-size: 15px;">正文</span>
     <br/>
     <div class="shadow_div" ></div>
     <br/>
     <div class="book-div">
-        <table class="book-div-table">
-
-
-
-        </table>
+       <div style="font-family: 宋体;font-size: 14px;line-height: 2em;text-indent: 2em;padding: 7px 90px;word-wrap: break-word;text-align: left" th:utext="${articleContent}"></div>
     </div>
 
 </div>
+
+
 
 </body>
 
@@ -67,30 +69,9 @@
     $(function(){
         //页面加载完成之后执行
         // pageInit();
-        initArticleDetail();
+      //  initArticleDetail();
     });
-    function initArticleDetail() {
-        var bookid = $("#bookid").val();
-        $.post("/login/article/queryArticleList",{bookid : bookid},function (result) {
-            if(result!=null){
-                var articles =eval(result);
-                for(var i in articles){
-                    var articlename = articles[i].articlename;
-                    var xuhao = parseInt(i)+1;
-                    var yushu = parseInt(xuhao)%3;
-                    var zhangxu = "第"+xuhao+"章   ";
-                    if(yushu==1){
-                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
-                    }else{
-                        $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td>');
 
-                    }
-
-                }
-            }
-        },"json");
-
-    }
 
 
 

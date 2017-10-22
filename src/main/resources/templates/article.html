@@ -78,11 +78,12 @@
                 for(var i in articles){
                     var articlename = articles[i].articlename;
                     var articleid = articles[i].id;
+                    var articlesort = articles[i].articlesort;
                     var xuhao = parseInt(i)+1;
                     var yushu = parseInt(xuhao)%3;
-                    var zhangxu = "第"+numberToChineseNumber(xuhao+"")+"章   ";
+                    var zhangxu = "第"+numberToChineseNumber(articlesort+"")+"章   ";
                     if(yushu==1){
-                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a" onclick="openArticleDetail(\''+bookid+'\',\''+articleid+'\');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
+                        $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a" onclick="openArticleDetail(\''+articleid+'\',\''+bookid+'\',\''+zhangxu+'\');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
                     }else{
                         $(".book-div tr:last").append('<td class="articlename-td"><a class="articlename-td-a" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td>');
 

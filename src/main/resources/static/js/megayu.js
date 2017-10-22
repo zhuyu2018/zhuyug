@@ -96,6 +96,8 @@ function numberToChineseNumber(numstr) {
     }
 }
 //章节阅读
-function openArticleDetail(articleid,bookid) {
-    self.location.href="/login/article/openArticleDetail?articleid="+articleid+"&bookid="+bookid;
+function openArticleDetail(articleid,bookid,zhang) {
+    // alert(articleid);
+    // alert(bookid);
+    self.location.href="/login/article/openArticleDetail?articleid="+articleid+"&bookid="+bookid+"&zhang="+zhang;
 }

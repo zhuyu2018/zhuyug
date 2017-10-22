@@ -133,6 +133,7 @@ public class ArticleController {
     public String openArticleDetail(HttpServletRequest request , HttpServletResponse response, Model model){
         String bookid = request.getParameter("bookid");
         String articleid = request.getParameter("articleid");//当前章节id
+        String zhangxu = request.getParameter("zhang");
         if (articleid==null || articleid.equals("") || articleid.equals("undefined")){
             return "error";
         }
@@ -143,9 +144,18 @@ public class ArticleController {
         if (article==null){
             return "error";
         }
+        String replaceStr = "</p><p>&nbsp;&nbsp;";
+        Book book = bookRepository.findByIdAndDelstatus(Integer.valueOf(bookid),1);
         model.addAttribute("prevId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"prev"));
         model.addAttribute("nextId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"next"));
-        model.addAttribute("articleContent",article.getArticlecontent());
+        model.addAttribute("bookname",book.getBookname());
+        model.addAttribute("zhangxu",zhangxu);
+        model.addAttribute("updatetime",DateUtil.editDateTime(article.getCreatetime()));
+        model.addAttribute("authorname",book.getAuthorname());
+        model.addAttribute("articlename",article.getArticlename());
+        String articleContent = "<p>&nbsp;&nbsp;"+article.getArticlecontent().trim().replace("\n",replaceStr)+"</p>";
+        model.addAttribute("articleContent",articleContent);
+        model.addAttribute("contentLength",article.getArticlecontent().length());
         model.addAttribute("bookid",bookid);
         return "articledetail";
     }
