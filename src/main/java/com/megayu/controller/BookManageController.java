@@ -245,6 +245,7 @@ public class BookManageController {
             article.setArticlesort(as);
             article.setPublicstatus(ps);
             article.setArticletype(3);
+            article.setDelstatus(1);
             article.setCreatetime(new Date());
             Article articleresult = articleRepository.save(article);
             if(articleresult==null || articleresult.getId()==null || articleresult.getId()<=0){

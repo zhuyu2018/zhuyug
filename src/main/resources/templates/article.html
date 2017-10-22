@@ -80,7 +80,7 @@
                     var articleid = articles[i].id;
                     var xuhao = parseInt(i)+1;
                     var yushu = parseInt(xuhao)%3;
-                    var zhangxu = "第"+numberToChineseNumber(xuhao)+"章   ";
+                    var zhangxu = "第"+numberToChineseNumber(xuhao+"")+"章   ";
                     if(yushu==1){
                         $(".book-div").append('<tr class="articlename-tr"><td class="articlename-td"><a class="articlename-td-a" onclick="openArticleDetail(\''+bookid+'\',\''+articleid+'\');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+zhangxu+articlename+'</a></td></tr>');
                     }else{
