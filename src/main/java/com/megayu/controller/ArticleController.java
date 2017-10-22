@@ -113,7 +113,7 @@ public class ArticleController {
             Integer bid = Integer.valueOf(bookid);
             Sort sort = new Sort(Sort.Direction.DESC, "createtime");
             Pageable pageable = new PageRequest(pagei, sizei,sort);
-            pages = articleRepository.findByBookid(bid,pageable);
+            pages = articleRepository.findByBookidOrderByArticlesortAsc(bid,pageable);
         }
         List<Article> articleList = pages.getContent();
         return new Gson().toJson(articleList);

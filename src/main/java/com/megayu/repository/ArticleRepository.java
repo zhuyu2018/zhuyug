@@ -17,7 +17,7 @@ public interface ArticleRepository extends JpaRepository<Article,Long> ,JpaSpeci
     @Modifying
     List<Article> queryArticleLimit(Integer userid,int type, int limit);
 
-    Page<Article> findByBookid(Integer bookid, Pageable pageable);
+    Page<Article> findByBookidOrderByArticlesortAsc(Integer bookid, Pageable pageable);
 
     @Query(value = "select * from y_article where bookid=?1 and delstatus=1 order by id desc ", nativeQuery = true)
     @Modifying
