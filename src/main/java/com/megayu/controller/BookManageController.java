@@ -226,7 +226,7 @@ public class BookManageController {
         map.put("totalCount",pages.getTotalElements());
         map.put("dataList",resultList);
         map.put("totalpages",pages.getTotalPages());
-        map.put("bookid",bkid);
+//        map.put("bookid",bkid);
         return new Gson().toJson(map);
     }
 
