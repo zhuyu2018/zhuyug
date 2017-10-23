@@ -101,3 +101,6 @@ function openArticleDetail(articleid,bookid,zhang) {
     // alert(bookid);
     self.location.href="/login/article/openArticleDetail?articleid="+articleid+"&bookid="+bookid+"&zhang="+zhang;
 }
+function toWork() {
+    self.location.href="/login/bookManage/openBookManage";
+}

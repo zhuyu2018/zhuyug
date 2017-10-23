@@ -169,9 +169,11 @@ public class BookManageController {
                 Path<Integer> createuser = root.get("createuser");
                 Path<Integer> delstatus = root.get("delstatus");
                 Path<Integer> bookid = root.get("bookid");
-                query.where(cb.equal(createuser, userid),cb.equal(bookid, bid),cb.equal(delstatus, 1));
+
                 if(aname!=null&&!aname.equals("")){
-                    query.where(cb.like(articlename, "%"+aname+"%"));
+                    query.where(cb.equal(createuser, userid),cb.equal(bookid, bid),cb.equal(delstatus, 1),cb.like(articlename, "%"+aname+"%"));
+                }else {
+                    query.where(cb.equal(createuser, userid),cb.equal(bookid, bid),cb.equal(delstatus, 1));
                 }
                 return null;
             }
@@ -252,10 +254,11 @@ public class BookManageController {
                 Path<String> bookname = root.get("bookname");
                 Path<Integer> createuser = root.get("createuser");
                 Path<Integer> delstatus = root.get("delstatus");
-                query.where(cb.equal(createuser, userid));
-                query.where(cb.equal(delstatus, 1));
+
                 if(bname!=null&&!bname.equals("")){
-                    query.where(cb.like(bookname, "%"+bname+"%"));
+                    query.where(cb.equal(createuser, userid),cb.equal(delstatus, 1),cb.like(bookname, "%"+bname+"%"));
+                }else {
+                    query.where(cb.equal(createuser, userid),cb.equal(delstatus, 1));
                 }
                 return null;
             }
@@ -357,7 +360,7 @@ public class BookManageController {
             }
             Article article = new Article();
             article.setBookid(bid);
-            article.setArticlecontent(articlecontent);
+            article.setArticlecontent(articlecontent.trim().replace(" ",""));
             article.setArticlename(articlename);
             article.setCreateuser(loginVo.getId());
             article.setAuthor(loginVo.getId());
