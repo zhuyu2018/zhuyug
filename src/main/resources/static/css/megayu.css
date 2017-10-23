@@ -35,6 +35,13 @@
     /*z-index: 9999;*/
     position: relative;z-index: 2;
 }
+.prev-next-div{
+    width: 978px;
+    height: 61px;
+    margin:0 auto;
+    background:rgba(255, 242, 218,0.8);
+    position:relative;z-index:3;
+}
 .book{
     /*border:1px solid #cccccc;*/
     /*box-shadow: 0px -10px 0px 0px #ff0000,   !*上边阴影  红色*!*/

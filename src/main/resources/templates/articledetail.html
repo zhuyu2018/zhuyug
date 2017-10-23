@@ -20,6 +20,8 @@
 <div>
     <input type="hidden" id="bookid" th:value="${bookid}"/>
     <input type="hidden" id="bookname" th:value="${bookname}"/>
+    <input type="hidden" id="prevId" th:value="${prevId}"/>
+    <input type="hidden" id="nextId" th:value="${nextId}"/>
 </div>
 <!--<div>
     <table id="articleTable"></table>
@@ -47,10 +49,24 @@
     <div class="book-div">
        <div style="font-family: 宋体;font-size: 14px;line-height: 2em;text-indent: 2em;padding: 7px 90px;word-wrap: break-word;text-align: left" th:utext="${articleContent}"></div>
     </div>
+    <br/>    <br/>
+
+    <!--<div class="shadow_div" ></div>-->
+
 
 </div>
+<br/>
+<div class="prev-next-div">
+    <br/>
 
+    <a style="float: left;margin-left: 186px;cursor: pointer;color: black;" onclick="toPrevArticl();">上一章</a>
+    <a style="cursor: pointer;" onclick="toBookMulu();">目录</a>
+    <a style="float: right;margin-right: 186px;cursor: pointer;color: black;" onclick="toNextArticle();">下一章</a>
 
+    <br/>
+
+</div>
+<br/>
 
 </body>
 
@@ -71,9 +87,28 @@
         // pageInit();
       //  initArticleDetail();
     });
+    function toPrevArticl() {
+        var previd = $("#prevId").val();
+        var bookid = $("#bookid").val();
+        if(previd==null || previd=="" || previd=="undefined" || previd=="-1"){
+            return;
+        }
+        openArticleDetail(previd,bookid,"");
 
-
-
+    }
+    function toNextArticle() {
+        var nextid = $("#nextId").val();
+        var bookid = $("#bookid").val();
+        if(nextid==null || nextid=="" || nextid=="undefined" || nextid=="-1"){
+            return;
+        }
+        openArticleDetail(nextid,bookid,"");
+    }
+    function toBookMulu() {
+        var bookid = $("#bookid").val();
+        var bookname = $("#bookname").val();
+        openBook(bookid,bookname);
+    }
 
 
 
