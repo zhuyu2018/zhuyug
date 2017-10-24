@@ -132,7 +132,7 @@
             alert("请完善注册信息");
             return;
         }
-        $.post("login/toRegister",{registerName:registerName,registerPassword:registerPassword,registerSurePassword:registerSurePassword},function(result){
+        $.post("/login/toRegister",{registerName:registerName,registerPassword:registerPassword,registerSurePassword:registerSurePassword},function(result){
             if(result=="success"){
                 alert("注册成功请登录");
                 $("#registerModal").slideUp('slow');

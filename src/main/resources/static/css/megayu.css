@@ -417,6 +417,7 @@ tr{
 
     float: right;margin-right: 186px;cursor: pointer;color: black;
 }
+
 .next-a-nouse{
     float: right;margin-right: 186px;color: #cccccc;
 }
@@ -425,4 +426,21 @@ tr{
 }
 .prev-a-nouse{
     float: left;margin-left: 186px;color: #cccccc;
+}
+
+.next-a-use:hover{
+    text-decoration: none;
+    color: coral;
+}
+.next-a-nouse:hover{
+    text-decoration: none;
+    color: #cccccc;
+}
+.prev-a-use:hover{
+    text-decoration: none;
+    color: coral;
+}
+.prev-a-nouse:hover{
+    text-decoration: none;
+    color: #cccccc;
 }

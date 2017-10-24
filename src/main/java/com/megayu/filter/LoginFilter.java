@@ -47,7 +47,7 @@ public class LoginFilter implements Filter {
     }
 
     public boolean urlFilter(String url){
-        if("/login/toLogin".equals(url)){
+        if("/login/toLogin".equals(url) || "/login/toRegister".equals(url)){
             return true;
         }
         return false;

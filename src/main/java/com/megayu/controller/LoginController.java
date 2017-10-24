@@ -48,7 +48,7 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/toRegister")
-    public String toRegister(HttpServletRequest request , HttpServletResponse response, Model model) throws ServletException, IOException {
+    public String toRegister(HttpServletRequest request , HttpServletResponse response, Model model){
         String registerName = request.getParameter("registerName");
         String registerPassword = request.getParameter("registerPassword");
         String registerSurePassword = request.getParameter("registerSurePassword");

@@ -59,9 +59,9 @@
 <div class="prev-next-div">
     <br/>
 
-    <a th:class="${prevId eq '-1'} ? 'prev-a-nouse' : 'prev-a-use' " style="" onclick="toPrevArticl();">上一章</a>
+    <a th:class="${prevId eq '-1'} ? 'prev-a-nouse' : 'prev-a-use' "  onclick="toPrevArticl();">上一章</a>
     <a style="cursor: pointer;" onclick="toBookMulu();">目录</a>
-    <a th:class="${nextId eq '-1'} ? 'next-a-nouse' : 'next-a-use'" style="" onclick="toNextArticle();">下一章</a>
+    <a th:class="${nextId eq '-1'} ? 'next-a-nouse' : 'next-a-use'"  onclick="toNextArticle();">下一章</a>
 
     <br/>
 
@@ -80,7 +80,6 @@
 <!-- jqGrid插件的多语言包-非必要 -->
 <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
 <script type="text/javascript" src="/js/grid.locale-cn.js"></script>
-megayu
 <script>
     $(function(){
         //页面加载完成之后执行
