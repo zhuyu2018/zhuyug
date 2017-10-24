@@ -413,3 +413,16 @@ tr{
     margin: 0 auto;
     background: url("../image/shadow.png") no-repeat;
 }
+.next-a-use{
+
+    float: right;margin-right: 186px;cursor: pointer;color: black;
+}
+.next-a-nouse{
+    float: right;margin-right: 186px;color: #cccccc;
+}
+.prev-a-use{
+    float: left;margin-left: 186px;cursor: pointer;color: black;
+}
+.prev-a-nouse{
+    float: left;margin-left: 186px;color: #cccccc;
+}

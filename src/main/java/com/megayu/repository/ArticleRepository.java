@@ -36,4 +36,7 @@ public interface ArticleRepository extends JpaRepository<Article,Long> ,JpaSpeci
     Article queryOtherArticle(Integer bookid,Integer sort);
 
     Article findByIdAndDelstatus(Integer id,Integer delstatus);
+
+    @Query(value = "select * from y_article where bookid = ?1 and delstatus=1 and publicstatus = 1 order by articlesort desc limit 1 ",nativeQuery = true)
+    Article findMaxSortByBookid(Integer bookid);
 }

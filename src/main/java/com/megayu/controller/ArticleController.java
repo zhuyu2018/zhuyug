@@ -149,7 +149,7 @@ public class ArticleController {
         model.addAttribute("prevId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"prev"));
         model.addAttribute("nextId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"next"));
         model.addAttribute("bookname",book.getBookname());
-        model.addAttribute("zhangxu",zhangxu);
+        model.addAttribute("zhangxu",numberToChineseNumber(article.getArticlesort().toString()));
         model.addAttribute("updatetime",DateUtil.editDateTime(article.getCreatetime()));
         model.addAttribute("authorname",book.getAuthorname());
         model.addAttribute("articlename",article.getArticlename());
@@ -164,7 +164,7 @@ public class ArticleController {
         String id = "-1";
         Integer countArticle = 0;
         if("next".equals(type)){
-            countArticle = articleRepository.findByBookid(bookid).size();
+            countArticle = articleRepository.findMaxSortByBookid(bookid).getArticlesort();
         }
         int i = 0;
         if (sort!=null&&sort>0){
@@ -198,5 +198,58 @@ public class ArticleController {
             }
         }
         return id;
+    }
+
+    public String numberToChineseNumber(String numstr){
+        String[] chineseNumb = {"零","一","二","三","四","五","六","七","八","九","十"};
+        if(numstr.length()==1){
+            return chineseNumb[Integer.valueOf(numstr)];
+        }else if(numstr.length()==2){
+            String[] numArr = numstr.split("");
+            String lastNum = "";
+            if(numArr[1]!="0"){
+                lastNum =chineseNumb[Integer.valueOf(numArr[1])];
+            }
+            return chineseNumb[Integer.valueOf(numArr[0])]+"十"+lastNum;
+        }else if (numstr.length()==3){
+            String[] numArr = numstr.split("");
+            String lastNum = "";
+            if(numArr[2]!="0"){
+                lastNum =chineseNumb[Integer.valueOf(numArr[2])];
+            }
+            String msg = "";
+            msg = msg + chineseNumb[Integer.valueOf(numArr[0])]+"百";
+            if(numArr[1]=="0"&&numArr[2]=="0"){
+                return msg;
+            }else if(numArr[1]=="0"&&numArr[2]!="0"){
+                return msg + chineseNumb[Integer.valueOf(numArr[2])];
+            }else if(numArr[1]!="0"&&numArr[2]!="0"){
+                return msg +chineseNumb[Integer.valueOf(numArr[1])] + "十" +chineseNumb[Integer.valueOf(numArr[2])];
+            }else if(numArr[1]!="0"&&numArr[2]=="0"){
+                return msg +chineseNumb[Integer.valueOf(numArr[1])] + "十";
+            }
+        }else if (numstr.length()==4){
+            String[] numArr = numstr.split("");
+            String msg = "";
+            msg = msg + chineseNumb[Integer.valueOf(numArr[0])]+"千";
+            if(numArr[1]!="0"&&numArr[2]!="0"&&numArr[3]!="0"){
+                return msg + chineseNumb[Integer.valueOf(numArr[1])]+"百"+chineseNumb[Integer.valueOf(numArr[2])]+"十"+chineseNumb[Integer.valueOf(numArr[3])];
+            }else if (numArr[1]!="0"&&numArr[2]=="0"&&numArr[3]!="0"){
+                return msg + chineseNumb[Integer.valueOf(numArr[1])]+"百零"+chineseNumb[Integer.valueOf(numArr[3])];
+            }else if (numArr[1]=="0"&&numArr[2]=="0"&&numArr[3]!="0"){
+                return msg + "零"+chineseNumb[Integer.valueOf(numArr[3])];
+            }else if (numArr[1]=="0"&&numArr[2]!="0"&&numArr[3]!="0"){
+                return msg + "零"+chineseNumb[Integer.valueOf(numArr[2])]+"十"+chineseNumb[Integer.valueOf(numArr[3])];
+            }else if(numArr[1]!="0"&&numArr[2]!="0"&&numArr[3]=="0"){
+                return msg + chineseNumb[Integer.valueOf(numArr[1])]+"百"+chineseNumb[Integer.valueOf(numArr[2])]+"十";
+            }else if (numArr[1]!="0"&&numArr[2]=="0"&&numArr[3]=="0"){
+                return msg + chineseNumb[Integer.valueOf(numArr[1])]+"百";
+            }else if (numArr[1]=="0"&&numArr[2]=="0"&&numArr[3]=="0"){
+                return msg;
+            }else if (numArr[1]=="0"&&numArr[2]!="0"&&numArr[3]=="0"){
+                return msg + "零"+chineseNumb[Integer.valueOf(numArr[2])]+"十";
+            }
+        }
+        return "";
     }
 }

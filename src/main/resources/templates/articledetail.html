@@ -59,9 +59,9 @@
 <div class="prev-next-div">
     <br/>
 
-    <a style="float: left;margin-left: 186px;cursor: pointer;color: black;" onclick="toPrevArticl();">上一章</a>
+    <a th:class="${prevId eq '-1'} ? 'prev-a-nouse' : 'prev-a-use' " style="" onclick="toPrevArticl();">上一章</a>
     <a style="cursor: pointer;" onclick="toBookMulu();">目录</a>
-    <a style="float: right;margin-right: 186px;cursor: pointer;color: black;" onclick="toNextArticle();">下一章</a>
+    <a th:class="${nextId eq '-1'} ? 'next-a-nouse' : 'next-a-use'" style="" onclick="toNextArticle();">下一章</a>
 
     <br/>
 

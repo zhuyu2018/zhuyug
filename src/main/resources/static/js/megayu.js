@@ -7,6 +7,10 @@ function  loginOut(obj) {
         }
     })
 }
+
+function toWork() {
+    self.location.href="/login/bookManage/openBookManage";
+}
 function goParent(){
     window.history.go(-1);
 }
