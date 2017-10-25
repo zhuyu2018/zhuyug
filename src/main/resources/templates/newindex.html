@@ -103,6 +103,18 @@
 <script  src="js/jquery-3.2.1.min.js" th:src="@{js/jquery-3.2.1.min.js}"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
+
+    $(function(){
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+                //处理登录事件
+                toLogin();
+
+            }
+        }
+    });
+
     function loginModal() {
 //        $("#login").removeClass("fade");
         $("#modal").slideToggle();
