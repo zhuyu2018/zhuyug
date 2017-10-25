@@ -77,6 +77,13 @@ public class LoginController {
 //        String loginName = (String) request.getSession().getAttribute("loginName");
             model.addAttribute("loginName",loginVo.getLoginname());
         }
+        String page = request.getParameter("page");
+        if (page==null || page.equals("") ||page.equals("undefined")){
+            page = "1";
+            model.addAttribute("page",page);
+        }else {
+            model.addAttribute("page",Integer.valueOf(page)+1);
+        }
 
         return "loginsuccess";
     }
