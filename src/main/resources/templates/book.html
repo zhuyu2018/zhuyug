@@ -31,7 +31,11 @@
     <button  class="btn btn-info" style="width: 60px;height: 30px;float: left;margin-right: 14px;margin-top: 99px;" onclick="bigSearch();" >检索</button>
 
 </div>
-
+<div class="book-right-div">
+    <img class="right-nav" onclick="openBookSubject('0')" src="/image/shu1.png"/>
+    <img class="right-nav" onclick="openWenSubject('0')" src="/image/wen1.png"/>
+    <img class="right-nav" onclick="openMiyuSubject('0')" src="/image/bi1.png"/>
+</div>
 <div class="book-subject">
 
 
@@ -72,7 +76,7 @@
             if(result!=null){
                 var books =eval(result);
                 var html = "";
-                var booksubjectheight = 200;
+                var booksubjectheight = 100;
                 var imgxh = 1;
                 var flag = false;
                 for(var i in books){

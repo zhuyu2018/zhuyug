@@ -16,6 +16,9 @@
             <!--<img src="/image/lgo2.png"/>-->
         <!--</div>-->
         <img class="mouseOnClass" id="shuyeID" style="width: 40px;float: right;margin-top: -12px;cursor: pointer;" src="/image/xiajiantou3.png"/>
+        <img style="width: 48px;margin-top: 5px;cursor: pointer;" onclick="backLoginSuccess();" src="/image/haitang.png"/>
+        <span onclick="backLoginSuccess();" style="color:#000000;cursor: pointer;font-size: large;font-family: 宋体;font-weight: 600;top: 9px;position: absolute;">觅语</span>
+
         <a id="topLoginNameA" class="mouseOnClass" style="font-size: initial;margin-top: 7px;float:right;color: #666;font-weight: 600;cursor: pointer" href="infoEdit">Tourist</a>
         <img style="width: 40px;float: left;margin-top: 6px;cursor: pointer;" onclick="goParent();" src="/image/xiajiantou1.png"/>
     </div>
@@ -24,7 +27,7 @@
         <div class="login-modal-hidden" >
 
             <span style="font-family: 楷体;font-size: xx-small;float: left;color: #942a25;margin-top: 5px;">&nbsp;&nbsp;天青青兮欲雨，水澹澹兮生烟</span>
-            <button  class="btn" style="width: 111px;height: 33px;margin-top: 2px;float: right;margin-right: 122px;"  onclick="toWork();">创作后台</button>
+            <button id="bookManageButton" class="btn" style="width: 111px;height: 33px;margin-top: 2px;float: right;margin-right: 122px;"  onclick="toWork();">创作后台</button>
             <button  class="btn btn-info" style="width: 50px;margin-top: 29px;height: 25px;font-size: xx-small" onclick="gaimi();" >改密</button>
             <button  class="btn btn-danger" style="width: 50px;height: 25px;font-size: xx-small;margin-top: 5px;margin-left: 168px;" onclick="loginOut(this);">退出</button>
 
@@ -43,6 +46,7 @@
     $(function () {
         queryLoginName();
         loginModalShow();
+        bookManageButton();
     })
 //    window.onscroll=function(){
 //        var box= document.getElementById("img-div-id");
@@ -77,6 +81,18 @@ function gaimi() {
             $("#topLoginNameA").text(result);
         })
     }
+
+    function bookManageButton() {
+        $("#bookManageButton").hide();
+        $.post("/login/jurisdiction/getJurisdiction",{},function (result) {
+            if(result=="yes"){
+            $("#bookManageButton").show();
+            }
+        })
+    }
+function backLoginSuccess() {
+    self.location.href="/login/loginSuccess";
+}
     /*
         $(".login-modal-a").mouseout(function () {
             $("#loginModal").slideUp("slow");

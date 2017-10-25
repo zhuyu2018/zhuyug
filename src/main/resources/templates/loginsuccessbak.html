@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" style="width: 100%;height: 100%">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/image/haitang6.ico" />
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/megayu.css" />
+    <title>觅语</title>
+</head>
+<body style="text-align:center;width: 100%;height: 100%;">
+    <div th:include="top :: html"></div>
+    <!--<div class="jianbian-div" ></div>-->
+    <div class="right-div">
+        <img class="right-nav" onclick="openBookSubject('0')" src="/image/shu1.png"/>
+        <img class="right-nav" onclick="openBookSubject('0')" src="/image/wen1.png"/>
+        <img class="right-nav" onclick="openBookSubject('0')" src="/image/bi1.png"/>
+    </div>
+
+    <div class="success-body-div">
+        <br/>
+        <!--<div class="success-div2">-->
+        <div class="success-div-div">
+            <div>
+                <img class="ck-img" onclick="openBookSubject('0')" src="/image/shu1.png"/>
+
+            </div>
+
+            <div class="br-div"><span onclick="openBookSubject('0')" class="success-div-span">书 籍</span><br/></div>
+            <table class="success-div-table" id="booktable">
+                <tr class="success-table-top-tr">
+                    <td><span class="gengduo-span">&nbsp;</span></td>
+                    <!--<td><img src="/image/jiguang4.jpg"/></td>-->
+
+                </tr>
+
+            </table>
+
+        </div>
+        <div class="success-div-div">
+            <div>
+
+                <img  class="ck-img"  src="/image/wen1.png"/>
+
+            </div>
+
+            <div class="br-div"><span class="success-div-span">文 章</span><br/></div>
+            <table class="success-div-table" id="articletable">
+                <tr class="success-table-top-tr">
+                    <td><span class="gengduo-span">&nbsp;</span></td>
+                    <!--<td><img src="/image/jiguang4.jpg"/></td>-->
+
+                </tr>
+
+            </table>
+        </div>
+        <div class="success-div-div">
+            <div>
+                <img  class="ck-img"  src="/image/bi1.png"/>
+
+            </div>
+
+            <div class="br-div"><span class="success-div-span">觅 语</span><br/></div>
+            <table class="success-div-table" id="miyutable">
+                <tr class="success-table-top-tr">
+                    <td><span class="gengduo-span">&nbsp;</span></td>
+                    <!--<td><img src="/image/jiguang4.jpg"/></td>-->
+
+                </tr>
+
+            </table>
+        </div>
+        <!--</div>-->
+    </div>
+
+
+  <!--  <div class="login-modal-div hide-div" id="loginModal"  >
+        <table class="login-modal-table" >
+            <tr>
+                <td>
+                    <a class="login-modal-a">修改个人信息</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="login-modal-a">更多</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>-->
+</body>
+<script  src="/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script  src="/js/megayu.js" th:src="@{/js/megayu.js}"></script>
+<script>
+    var booktableheight = 0;
+    var articletableheight = 0;
+    var miyutableheight = 0;
+    $(function () {
+
+        queryBook();
+//        tableHeight();
+        queryMiyu();
+        queryArticle();
+    })
+//    function tableHeight() {
+//        var divheight = compare(booktableheight,articletableheight,miyutableheight);
+////        $(".success-body-div").attr("style","height:"+divheight+"px");
+////        $(".success-body-div").css(" background",":rgba(255,251,240,0.8);");
+//    }
+    function queryMiyu() {
+        $.post("/login/article/queryMiyu",{},function (result) {
+            if(result!=null){
+                var miyus = eval(result)
+
+                for(var i in miyus){
+//                    booktableheight= booktableheight + 70;
+
+                    var miyuname = miyus[i].articlename;
+                    var articlecontent = miyus[i].articlecontent;
+                    var time1 = miyus[i].time1;
+                    var authorname = miyus[i].authorname;
+//                    remark = "&nbsp;&nbsp;&nbsp;"+ remark;
+                    if(articlecontent.length>60){
+                        articlecontent = articlecontent.substr(0,60);
+                        articlecontent = articlecontent + "......";
+                    }
+                    var miyuid = miyus[i].id;
+
+                    $("#miyutable").append('<tr class="success-table-tr" ><td style="width: 240px;height: 70px;border-bottom: 1px solid #cccccc;text-align: left"><a class="table-a" style="font-size: smaller"  onclick="openMiyu(\''+miyuid+'\',\''+miyuname+'\');">'+articlecontent+'</a><br/><a class="table-a" style="font-size: xx-small;color: #cccccc" onclick="openMiyu(\''+miyuid+'\',\''+miyuname+'\');">'+authorname+'</a><span style="font-size: xx-small;color: #cccccc;float: right;margin-top: 1px;">'+time1+'</span></td></tr>');
+                }
+
+            }
+        })
+    }
+    function queryArticle() {
+        $.post("/login/article/queryArticle",{},function (result) {
+            if(result!=null){
+                var articls = eval(result)
+
+                for(var i in articls){
+//                    booktableheight= booktableheight + 70;
+
+                    var articlname = articls[i].articlename;
+                    var remark = articls[i].remark;
+                    var time1 = articls[i].time1;
+                    var articlecontent = articls[i].articlecontent;
+                    var authorname = articls[i].authorname;
+//                    remark = "&nbsp;&nbsp;&nbsp;"+ remark;
+                    if(articlecontent.length>60){
+                        articlecontent = articlecontent.substr(0,60);
+                        articlecontent = articlecontent + "......";
+                    }
+                    var articlid = articls[i].id;
+
+                    $("#articletable").append('<tr class="success-table-tr" ><td style="width: 240px;height: 70px;border-bottom: 1px solid #cccccc;text-align: left"><a class="table-a" onclick="openArticle(\''+articlid+'\',\''+articlname+'\');">'+articlname+'</a><br/><a class="table-a" style="color: #4297d7;font-size: xx-small"  onclick="openArticle(\''+articlid+'\',\''+articlname+'\');">&nbsp;&nbsp;&nbsp;'+articlecontent+'</a><br/><a class="table-a" style="color: #cccccc;font-size: xx-small"  onclick="openArticle(\''+articlid+'\',\''+articlname+'\');">&nbsp;'+authorname+'</a><span style="font-size: xx-small;color: #cccccc;float: right;margin-top: 1px;">'+time1+'</span></td></tr>');
+                }
+
+            }
+        })
+    }
+    function queryBook() {
+        $.post("/login/article/queryBook",{},function (result) {
+            if(result!=null){
+                var books = eval(result)
+
+                for(var i in books){
+                    booktableheight= booktableheight + 70;
+
+                    var bookname = books[i].bookname;
+                    var authorname = books[i].authorname;
+                    var time1 = books[i].time1;
+//                    var newDate = new Date();
+//                    newDate.setTime(createtime);
+                    var remark = books[i].remark;
+//                    remark = "&nbsp;&nbsp;&nbsp;"+ remark;
+                    if(remark.length>60){
+                        remark = remark.substr(0,60);
+                        remark = remark + "......";
+                    }
+                    var bookid = books[i].id;
+
+                    $("#booktable").append('<tr class="success-table-tr" ><td style="width: 240px;height: 70px;border-bottom: 1px solid #cccccc;text-align: left"><a class="table-a" onclick="openBook(\''+bookid+'\',\''+bookname+'\');">'+bookname+'</a><br/><a class="table-a" style="color: #2e6e9e;font-size: xx-small" onclick="openBook(\''+bookid+'\',\''+bookname+'\');">&nbsp;作者：'+authorname+'</a><br/><a class="table-a" style="font-size: xx-small"  onclick="openBook(\''+bookid+'\',\''+bookname+'\');">&nbsp;&nbsp;&nbsp;'+remark+'</a><br/><span style="font-size: xx-small;color: #cccccc;float: right">'+time1+'</span></td></tr>');
+                }
+
+            }
+        },"json")
+    }
+
+
+
+/*
+    $(".login-modal-a").mouseout(function () {
+        $("#loginModal").slideUp("slow");
+    })
+    function loginModalHide(){
+        $("#loginModal").slideToggle();
+    }
+    function loginModalShow() {
+        $("#loginModal").slideUp("slow");
+    }*/
+
+
+</script>
+</html>

@@ -47,6 +47,20 @@ function openBookSubject(page) {
         self.location.href="/login/book/openBookSubject?page="+page;
     }
 }
+function openMiyuSubject(page) {
+
+
+        self.location.href="/login/loginSuccess";
+
+}
+function openWenSubject(page) {
+    var bigbookname = $("#bigsearchbookname").val();
+    if(bigbookname!=null && bigbookname!=""&&bigbookname!=undefined){
+        self.location.href="/login/book/openBookSubject?page="+page+"&bookname="+bigbookname;
+    }else{
+        self.location.href="/login/book/openBookSubject?page="+page;
+    }
+}
 function numberToChineseNumber(numstr) {
     var numb= ["1","2","3","4","5","6","7","8","9","0"];
     var chineseNumb = ["零","一","二","三","四","五","六","七","八","九","十"];
@@ -105,6 +119,6 @@ function openArticleDetail(articleid,bookid,zhang) {
     // alert(bookid);
     self.location.href="/login/article/openArticleDetail?articleid="+articleid+"&bookid="+bookid+"&zhang="+zhang;
 }
-function toWork() {
-    self.location.href="/login/bookManage/openBookManage";
-}
+// function toWork() {
+//     self.location.href="/login/bookManage/openBookManage";
+// }

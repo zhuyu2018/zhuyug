@@ -3,8 +3,10 @@ package com.megayu.controller;
 import com.google.gson.Gson;
 import com.megayu.entity.Article;
 import com.megayu.entity.Book;
+import com.megayu.entity.Jurisdiction;
 import com.megayu.repository.ArticleRepository;
 import com.megayu.repository.BookRepository;
+import com.megayu.repository.JurisdictionRepositoty;
 import com.megayu.util.DateUtil;
 import com.megayu.util.LoginUtil;
 import com.megayu.vo.LoginVo;
@@ -32,9 +34,18 @@ public class BookManageController {
     BookRepository bookRepository;
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    JurisdictionRepositoty jurisdictionRepositoty;
+
     @RequestMapping(value = "/openBookManage")
     public String openBookManage(HttpServletRequest request , HttpServletResponse response, Model model){
-
+        LoginVo loginVo = LoginUtil.getLoginVo(request);
+        //查询有无创作后台的权限
+        Jurisdiction jurisdiction = jurisdictionRepositoty.findByUserid(loginVo.getId());
+        if(jurisdiction==null|| jurisdiction.getBookmanage()!=1){//权限记录不存在 或 无权限
+            model.addAttribute("errorMessage","您无权限");
+            return "error";
+        }
         return "booklist";
     }
 

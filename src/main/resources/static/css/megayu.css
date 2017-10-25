@@ -22,9 +22,9 @@
 }
 .success-body-div{
     /*text-align: center;*/
-    /*border: 1px solid #cccccc;*/
+    border: 1px solid #cccccc;
     margin: 0 auto;
-    margin-top: 80px;
+    margin-top: 11px;
     /*background-color: #ffffff;*/
 
     background:rgba(255,251,240,0.8);
@@ -85,7 +85,7 @@
     margin: 0 auto;
 }
 .login-modal-hidden{
-    margin-top: 35px;
+    margin-top: 5px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
     width: 246px;
@@ -443,4 +443,54 @@ tr{
 .prev-a-nouse:hover{
     text-decoration: none;
     color: #cccccc;
+}
+.right-nav{
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+.right-div{
+    position: relative;
+    z-index: 3;
+    width: 52px;
+    float: left;
+    margin-left: -63px;
+    margin-top: 71px;
+}
+.book-right-div{
+    position: relative;
+    z-index: 2;
+    /*width: 52;*/
+    width: 52px;
+    float: left;
+    margin-left: -760px;
+    margin-top: 57px;
+}
+.miyu-add-div{
+    margin: 0 auto;
+    margin-top: 70px;
+    /*background-color: #ffffff;*/
+    border: 1px solid #cccccc;
+    background:rgba(255,251,240,0.8);
+    width:978px;
+    height: 260px;
+    /*position:relative;z-index:10000;*/
+    /*background-color: #0e90d2;*/
+    /*z-index: 9999;*/
+    position: relative;z-index: 2;
+}
+.miyu-content-span{
+    text-align: left;
+    font-size: 14px;
+    text-indent: 0px;
+    margin-top: 5px;
+    color: #333333;
+    padding-left: 3px;
+    line-height: 24px;
+}
+.book-subject-div2{
+    width: 700px;
+    height: 200px;
+    margin: 0 auto;
+    /*border-top: 1px solid #cccccc;*/
+    border-bottom: 1px solid #cccccc;
 }

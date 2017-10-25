@@ -73,7 +73,7 @@ public class ArticleController {
         return books;
     }
     public List<Article> queryArticle(final Integer type, final Integer userid){
-        List<Article> articles = articleRepository.queryArticleLimit(userid,type,10);
+        List<Article> articles = articleRepository.queryArticleLimit(userid,type,50);
         if(articles!=null && articles.size()>0){
             for(Article article : articles){
                 article.setTime1(DateUtil.editDate(article.getCreatetime()));
@@ -149,7 +149,7 @@ public class ArticleController {
         model.addAttribute("prevId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"prev"));
         model.addAttribute("nextId",queryOtherArticleIdByCurrentSort(Integer.valueOf(bookid),article.getArticlesort(),"next"));
         model.addAttribute("bookname",book.getBookname());
-        model.addAttribute("zhangxu",numberToChineseNumber(article.getArticlesort().toString()));
+        model.addAttribute("zhangxu","第"+numberToChineseNumber(article.getArticlesort().toString())+"章");
         model.addAttribute("updatetime",DateUtil.editDateTime(article.getCreatetime()));
         model.addAttribute("authorname",book.getAuthorname());
         model.addAttribute("articlename",article.getArticlename());
