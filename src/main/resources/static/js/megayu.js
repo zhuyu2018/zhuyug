@@ -50,7 +50,7 @@ function openBookSubject(page) {
 function openMiyuSubject(page) {
 
 
-        self.location.href="/login/loginSuccess";
+        self.location.href="/login/loginSuccess?page="+page;
 
 }
 function openWenSubject(page) {
