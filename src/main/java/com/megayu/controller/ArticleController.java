@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sun.rmi.runtime.Log;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -39,6 +41,8 @@ public class ArticleController {
     BookRepository bookRepository;
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    private EntityManager entity;
     @ResponseBody
     @RequestMapping(value = "/queryArticle")
     public String queryArticle(HttpServletRequest request , HttpServletResponse response, Model model){
@@ -50,8 +54,11 @@ public class ArticleController {
     @ResponseBody
     @RequestMapping(value = "/queryMiyu")
     public String queryMiyu(HttpServletRequest request , HttpServletResponse response, Model model){
+        String page = request.getParameter("page");
+        int sizei = 50;
+        int pagei = (Integer.valueOf(page)-1)*sizei;
         LoginVo loginVo = LoginUtil.getLoginVo(request);
-        List<Article> articles = queryArticle(1,loginVo.getId());
+        List<Article> articles = queryArticleAuto(loginVo.getId(),null,1,pagei,sizei);
         Gson gson = new Gson();
         return gson.toJson(articles);
     }
@@ -81,6 +88,24 @@ public class ArticleController {
         }
         return articles;
     }
+
+    public List<Article> queryArticleAuto(Integer userid,String articlename,Integer type,int page,int size){
+        StringBuffer sql = new StringBuffer("");
+        sql.append(" select id,article,articlecontent,author,authorname,createtime,edittime,createuser,edituser,publicstatus,delstatus,time1,time2 from y_article where 1=1 ");
+        sql.append(" and (createuser="+userid+" or publicstatus=1) and delstatus=1 ");
+        if(articlename!=null && !"".equals(articlename) && !"undefined".equals(articlename)){
+            sql.append(" and articlename like '%"+articlename+"%' ");
+        }
+        if(type!=null){
+            sql.append(" and articletype = "+type);
+        }
+        sql.append(" order by id desc limit "+page+","+size+" ");
+        Query query = entity.createNativeQuery(sql.toString(), Article.class);
+        List<Article> articles = query.getResultList();
+        return  articles;
+    }
+
+
     @RequestMapping(value = "/openBook")
     public String openBook(HttpServletRequest request , HttpServletResponse response, Model model){
         String bookid = request.getParameter("bookid");

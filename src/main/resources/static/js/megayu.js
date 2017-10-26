@@ -54,12 +54,12 @@ function openMiyuSubject(page) {
 
 }
 function openWenSubject(page) {
-    var bigbookname = $("#bigsearchbookname").val();
-    if(bigbookname!=null && bigbookname!=""&&bigbookname!=undefined){
-        self.location.href="/login/book/openBookSubject?page="+page+"&bookname="+bigbookname;
-    }else{
-        self.location.href="/login/book/openBookSubject?page="+page;
-    }
+    // var bigbookname = $("#bigsearchbookname").val();
+    // if(bigbookname!=null && bigbookname!=""&&bigbookname!=undefined){
+    //     self.location.href="/login/book/openBookSubject?page="+page+"&bookname="+bigbookname;
+    // }else{
+    //     self.location.href="/login/book/openBookSubject?page="+page;
+    // }
 }
 function numberToChineseNumber(numstr) {
     var numb= ["1","2","3","4","5","6","7","8","9","0"];
