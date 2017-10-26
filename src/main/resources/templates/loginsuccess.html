@@ -65,7 +65,8 @@
 ////        $(".success-body-div").css(" background",":rgba(255,251,240,0.8);");
 //    }
     function queryMiyu() {
-        $.post("/login/article/queryMiyu",{},function (result) {
+        var page = $("#page").val();
+        $.post("/login/article/queryMiyu",{page:page},function (result) {
             if(result!=null){
                 var miyus =eval(result);
                 var html = "";
@@ -92,18 +93,18 @@
                         imgxh = 1;
                     }
                 }
-                var page = $("#page").val();
+
                 var later = page;
                 var front = parseInt(page)-2;
 
                 if(flag){
                     if(page==1){
-                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" style="cursor: auto;color: #cccccc;">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openBookSubject('+later+')">下一页</a></span></div>';
+                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" style="cursor: auto;color: #cccccc;">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openMiyuSubject('+later+')">下一页</a></span></div>';
                     }else{
-                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openBookSubject('+later+')">下一页</a></span></div>';
+                        html += '<div class="book-subject-div-page"><span class="book-subject-page-span1"><a class="book-subject-page-a1" onclick="openMiyuSubject('+front+')">上一页</a></span><span class="book-subject-page-span2"><a class="book-subject-page-a2" onclick="openMiyuSubject('+later+')">下一页</a></span></div>';
                     }
                 }else{
-                    html += '<div class="book-subject-div-page"><span class="book-subject-page-span1">没数据了，<a class="book-subject-page-a1" onclick="openBookSubject('+front+')">上一页</a></span></div>';
+                    html += '<div class="book-subject-div-page"><span class="book-subject-page-span1">没数据了，<a class="book-subject-page-a1" onclick="openMiyuSubject('+front+')">上一页</a></span></div>';
                 }
                 $(".success-body-div").append(html);
                 $(".success-body-div").css("height",miyusubjectheight+"px");

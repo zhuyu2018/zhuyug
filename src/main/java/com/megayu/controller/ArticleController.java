@@ -91,7 +91,7 @@ public class ArticleController {
 
     public List<Article> queryArticleAuto(Integer userid,String articlename,Integer type,int page,int size){
         StringBuffer sql = new StringBuffer("");
-        sql.append(" select id,article,articlecontent,author,authorname,createtime,edittime,createuser,edituser,publicstatus,delstatus,time1,time2 from y_article where 1=1 ");
+        sql.append(" select id,articlename,articlecontent,author,authorname,createtime,edittime,createuser,edituser,publicstatus,delstatus,time1,time2 from y_article where 1=1 ");
         sql.append(" and (createuser="+userid+" or publicstatus=1) and delstatus=1 ");
         if(articlename!=null && !"".equals(articlename) && !"undefined".equals(articlename)){
             sql.append(" and articlename like '%"+articlename+"%' ");
@@ -102,6 +102,11 @@ public class ArticleController {
         sql.append(" order by id desc limit "+page+","+size+" ");
         Query query = entity.createNativeQuery(sql.toString(), Article.class);
         List<Article> articles = query.getResultList();
+        if(articles!=null && articles.size()>0){
+            for(Article article:articles){
+                article.setTime1(DateUtil.editDate(article.getCreatetime()));
+            }
+        }
         return  articles;
     }
 
