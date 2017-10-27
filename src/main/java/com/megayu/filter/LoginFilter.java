@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
-
+        String type = request.getHeader("X-Requested-With")==null?"":request.getHeader("X-Requested-With");// XMLHttpRequest
         String url = request.getRequestURI();
         String contextPath = request.getContextPath();
         request.setAttribute("contextPath",contextPath);
@@ -39,7 +39,18 @@ public class LoginFilter implements Filter {
                 response.setHeader("Cache-Control", "no-store");
                 response.setDateHeader("Expires", 0);
                 response.setHeader("Prama", "no-cache");
-                response.sendRedirect("/");
+
+
+                if ("XMLHttpRequest".equals(type)) {
+                    // 处理ajax请求
+                    response.setHeader("SESSIONSTATUS", "TIMEOUT");
+                    response.setHeader("CONTEXTPATH", contextPath+"/");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    return;
+                }else{
+                    response.sendRedirect(contextPath+"/");
+                    return;
+                }
             }
             filterChain.doFilter(request,response);
         }
