@@ -30,12 +30,12 @@ public class LoginController {
         String loginName = request.getParameter("loginName");
         String password = request.getParameter("password");
         if(loginName==null || "".equals(loginName) ||password==null || password.equals("")){
-            return "fail";
+            return "用户名或密码为空";
         }
         //用户名密码校验
         User userResult = userRepository.findByLoginnameAndPassword(loginName,MD5Util.MD5EncodeUTF8(password));
         if(userResult==null){
-            return "fail";
+            return "用户名不存在或密码不正确";
         }else{
             LoginVo loginVo = new LoginVo();
             loginVo.setId(userResult.getId());

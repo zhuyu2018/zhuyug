@@ -12,8 +12,8 @@
 <!--/*@thymesVar id="name" type="java.lang.String"*/-->
 
 
-<div style="height: 43px;margin-top: 9px;">
-    <span style="float: left;margin-left: 15%;margin-top: 2%;"><span style="font-size: xx-large;color: #942a25">觅语</span><span style="font-family: cursive;font-size: smaller;">&nbsp;&nbsp;天青青兮欲雨，水澹澹兮生烟</span></span>
+<div style="height: 43px;margin-top: 9px;width: 980px;margin: 0 auto">
+    <span style="float: left;margin-top: 4%;"><span style="font-size: xx-large;color: #942a25">觅语</span><span style="font-family: cursive;font-size: smaller;">&nbsp;&nbsp;天青青兮欲雨，水澹澹兮生烟</span></span>
     <!--<span style="float: left;margin-left: 15%;margin-top: 1.5%;"><span style="font-size: xx-large;color: #942a25">Megayu</span><span>&nbsp;觅语</span></span>-->
     <!--<span style="float: left;margin-left: 15%;margin-top: 1.5%;" th:text="|Hello! Welcome to MEGAYU |" ><img src="image/shuye1.jpg"/></span>-->
     <!--<div style="float: right;width: 28px;margin-right: 5px;margin-top: 2px;" onclick="registerModal();" >-->
@@ -21,7 +21,7 @@
         <!--&lt;!&ndash;<img style="width: 26px;margin-right: 1px;" id="xing" src="image/xing.jpg"/>&ndash;&gt;-->
         <!--&lt;!&ndash;<label style="float: right;">注册</label>&ndash;&gt;-->
     <!--</div>-->
-    <div style="float: right;margin-right: 15%;margin-top: 3.5%;" onclick="registerModal();">
+    <div style="float: right;margin-top: 7.5%;" onclick="registerModal();">
         <button  class="btn btn-info" style="width: 50px;height: 25px;font-size: xx-small" >注册</button>
         <!--<img style="width: 32px;margin-right: 1px;" id="time"  src="image/time.jpg"/>-->
         <!--<label style="float: right;">登录</label>-->
@@ -29,7 +29,11 @@
 
 </div>
 
+
+
 <div class="center-div">
+
+<div style="margin:0 auto;width: 980px">
 
     <div class="center-div-login-div">
         <span class="center-div-login-span" >&nbsp;登录</span>
@@ -44,11 +48,17 @@
         </div>
         <br/>
         <button  class="btn" style="width: 314px;height: 40px"  onclick="toLogin();">登录</button>
+        <p></p>
+        <span id="returnMsg" style="float: left;color: #607080;margin-top: 14px;font-size: 14px;margin-left: 26px;"></span>
     </div>
 
+    <div class="left-img-div">
 
+        <img src="/image/yanyu10.jpg"/>
 
+    </div>
 
+</div>
 
 </div>
 
@@ -157,14 +167,16 @@
         var loginName = $("#loginNameDiv").val();
         var password = $("#passwordDiv").val();
         if(loginName==null || loginName=="" || password==null || password==""){
-            alert("请输入用户名和密码");
+//            alert("请输入用户名和密码");
+            $("#returnMsg").text("请输入用户名和密码");
             return;
         }
         $.post("login/toLogin",{loginName:loginName,password:password},function(result){
             if(result=="success"){
                 self.location.href="login/loginSuccess";
             }else{
-                alert("登录失败");
+                $("#returnMsg").text(result);
+//                alert("登录失败");
             }
         });
     }
