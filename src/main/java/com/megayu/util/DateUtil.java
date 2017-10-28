@@ -21,11 +21,18 @@ public class DateUtil {
         return createtimestr;
     }
 
+
+    public static String getHMS(Date date){
+        String createtimestr = new SimpleDateFormat("HH:mm:ss").format(date);
+        return createtimestr;
+    }
+
     public static void main(String[] args){
-        String aa = "哦时代峻峰卡兰蒂斯房间卡23423dfasdf";
-        String bb = "我们是共产主义一啊啊啊啊";
-        System.out.println(aa.length());
-        System.out.println(bb.length());
+//        String aa = "哦时代峻峰卡兰蒂斯房间卡23423dfasdf";
+//        String bb = "我们是共产主义一啊啊啊啊";
+//        System.out.println(aa.length());
+//        System.out.println(bb.length());
+        System.out.println(getHMS(new Date()));
     }
 
 }

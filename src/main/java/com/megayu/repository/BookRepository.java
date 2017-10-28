@@ -36,5 +36,5 @@ public interface BookRepository extends JpaRepository<Book,Long> ,JpaSpecificati
     Book findById(Integer id);
     Book findByIdAndDelstatus(Integer id,Integer delstatus);
 
-    Book findByBookname(String bookname);
+    Book findByBooknameAndDelstatus(String bookname,Integer delstatus);
 }

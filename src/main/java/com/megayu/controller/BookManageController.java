@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.megayu.entity.Article;
 import com.megayu.entity.Book;
 import com.megayu.entity.Jurisdiction;
+import com.megayu.entity.Userbackup;
 import com.megayu.repository.ArticleRepository;
 import com.megayu.repository.BookRepository;
 import com.megayu.repository.JurisdictionRepositoty;
+import com.megayu.repository.UserbackupRepository;
 import com.megayu.util.DateUtil;
 import com.megayu.util.LoginUtil;
 import com.megayu.vo.LoginVo;
@@ -34,6 +36,8 @@ public class BookManageController {
     BookRepository bookRepository;
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    UserbackupRepository userbackupRepository;
     @Autowired
     JurisdictionRepositoty jurisdictionRepositoty;
 
@@ -126,7 +130,7 @@ public class BookManageController {
             String authorname = loginVo.getName();
             Integer createuser = loginVo.getId();
             Integer publicstatusi = Integer.valueOf(publicstatus);
-            Book existBook = bookRepository.findByBookname(bookname);
+            Book existBook = bookRepository.findByBooknameAndDelstatus(bookname,1);
             if(existBook!=null){
                 return "该书籍已存在";
             }
@@ -385,6 +389,18 @@ public class BookManageController {
             if(articleresult==null || articleresult.getId()==null || articleresult.getId()<=0){
                 return "新增章节失败";
             }
+            //移除备份数据
+            try {
+                Userbackup userbackup = userbackupRepository.findByBookidAndCreateuserAndDelstatus(bid,loginVo.getId(),1);
+                if(userbackup!=null){
+                    userbackup.setUpdatetime(new Date());
+                    userbackup.setDelstatus(0);
+                    userbackupRepository.save(userbackup);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             return "success";
         }catch (Exception e){
             e.printStackTrace();

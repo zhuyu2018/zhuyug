@@ -92,6 +92,8 @@
                 <!--</div>-->
 
                 <textarea style="height: 500px;margin-left: 16px;width: 800px;" id="articlecontent"></textarea>
+                <p></p>
+                <span id="backupMsg" style="float: right;color: #999999;font-size: smaller;margin-right: 48px;"></span>
             </div>
             <div style="width: 300px;height: 50px">
                 <div class="col-sm-4">
@@ -132,6 +134,42 @@
 <!-- 这个是所有jquery插件的基础，首先第一个引入 -->
 
 <script>
+    setInterval(saveBackupArticle,60000);
+    $(function () {
+        var bookid = $("#bookid").val();
+        getBackupArticle(bookid,"2");
+
+    })
+
+    function saveBackupArticle() {
+        var bookid = $("#bookid").val();
+        var type = "2";
+        var articlename = $("#articlename").val();
+        var articlecontent = $("#articlecontent").val();
+
+        if(articlecontent==null || articlecontent=="" || articlecontent==undefined){
+            return ;
+        }
+
+        $.post("/login/backupArticle/saveBackupArticle",{bookid:bookid,type:type,articlename:articlename,articlecontent:articlecontent},function (result) {
+            if(result==null || result=="" || result=="0")    {
+                return;
+            }
+            $("#backupMsg").text(result+" 内容已自动保存")
+        })
+    }
+
+    function getBackupArticle(bookid,type) {
+        $.post("/login/backupArticle/getBackupArticle",{bookid:bookid,type:type},function (result) {
+            if (result==""||result==null||result=="fail"){
+                return ;
+            }
+            var article = eval(result);
+            $("#articlename").val(article.articlename);
+            $("#articlecontent").val(article.articlecontent);
+        },"json")
+    }
+
     $("#addBookArticle").click(function () {
         var bookid = $("#bookid").val();
         var articlename = $("#articlename").val();
